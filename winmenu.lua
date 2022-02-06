@@ -319,12 +319,12 @@ PrintTable(Activepanels)
 --------------------------------------------------------------------------------
 -- These are all hooks,
 -- Mapped as follows:
-	-- (Done!) Taskbar: 						"WINTASKBAR"	(Expected Usage: Low)
-	-- Painter:									"WINPAINTUI"	(Expected Usage: Medium)
+	-- (Done!) Taskbar: 					"WINTASKBAR"	(Expected Usage: Low)
+	-- Painter:						"WINPAINTUI"	(Expected Usage: Medium)
 	-- (Almost Done!) WindowManagement:			"WINMGR"	(Expected Usage: High)
 	-- (Almost Done!) FileBrowser:				(variable name)	(Expected Usage: Very High)
-	-- Parralel Incorporator:					"INTEGRATE"	(Expected Usage: Very High)
-	-- Tab Quick-switcher:						"WINTABSWITCH"	(Expected Usage: Medium)
+	-- Parralel Incorporator:				"INTEGRATE"	(Expected Usage: Very High)
+	-- Tab Quick-switcher:					"WINTABSWITCH"	(Expected Usage: Medium)
 	
 	
 --[[
