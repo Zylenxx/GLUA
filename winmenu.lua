@@ -4,7 +4,7 @@
 #################  CONSTANTS AND VARIABLES  #################
 #############################################################
 ]]--
- 
+
 -- Fonts.
 
 	local _Localfont = "EuroStile Extended"
@@ -17,13 +17,13 @@
 	font = _Localfont, extended = false,
 	size = 15, weight = 500,
 	blursize = 0, scanlines =0,
-  	antialias = true, underline = false,
-  	italic = false, strikeout = false,
-  	symbol = false, rotary = false,
-  	shadow = false, additive = false,
-  	outline = false
-  	} )
-   	 ------------------------------------------------
+    	antialias = true, underline = false,
+    	italic = false, strikeout = false,
+    	symbol = false, rotary = false,
+    	shadow = false, additive = false,
+    	outline = false
+    	} )
+    	------------------------------------------------
 
 -- TaskBar Settings.
 local _WinMenuH = 30
@@ -40,7 +40,8 @@ local Activepanels = {}
 -- For DFrames
 local ActiveTabs   = {}
 -----------------------------------------------
-
+local Extras       = {}
+-----------------------------------------------
 --[[
 #############################################################
 ###################  CONTENTS: MAIN MENU  ###################
@@ -177,6 +178,20 @@ local Test = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  Test:SetFont("Centronium")
 	  Test:SetSize(23,23)
 	  function Test:Paint(w,h)
+	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  end
+-----------------------------------------------
+
+-- starfall filebrowser button.
+local Stonks = StartMenuInternal:Add("DButton",StartMenuInternal)
+	  Stonks:SetImage("icon16/money_add.png")
+	  Stonks:SetContentAlignment(4)
+	  Stonks:Dock( BOTTOM )
+	  Stonks:DockMargin(0,0,0,0)
+	  Stonks:SetText("Stonks Display")
+	  Stonks:SetFont("Centronium")
+	  Stonks:SetSize(23,23)
+	  function Stonks:Paint(w,h)
 	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
 	  end
 -----------------------------------------------
@@ -584,7 +599,14 @@ Test.DoClick = function()
 	AddTab("SF FileBrowser",SF_Fetcher,{700,400},"icon16/star.png")
 	
 end
-----------------------------------------------------------------------------	  	  
+
+Stonks.DoClick = function()
+			local Stonkers = NewWindow("Stonks Display",{400,100},{15,15},"icon16/money_add.png")	
+			local Stonks_GoBrr = vgui.Create("DLabel",Stonkers)
+				  Stonks_GoBrr:Dock(FILL)
+				  Stonks_GoBrr:SetFont("Centronium")
+end
+-----------------------------------------------------------------------------------------------------------
 
 
 
@@ -593,6 +615,18 @@ end
 
 end
 )
+
+hook.Add("Think","Stonks",function()
+	if IsValid(Activepanels["Stonks Display"]) then
+			local OreCashBrz = (ms.Ores.GetPlayerOre(LocalPlayer(),0)*100)
+			local OreCashSlv = (ms.Ores.GetPlayerOre(LocalPlayer(),1)*300)
+			local OreCashGold = (ms.Ores.GetPlayerOre(LocalPlayer(),2)*1200)
+			local OreCashPlat = (ms.Ores.GetPlayerOre(LocalPlayer(),3)*2000)
+			local CashTotal = (OreCashBrz+OreCashSlv+OreCashGold+OreCashPlat)*ms.Ores.GetPlayerMultiplier(LocalPlayer())
+			Activepanels["Stonks Display"]:GetChildren()[6]:SetText("Current trade-in would result in:\n+" .. tostring(math.Round(CashTotal)) .." Points/Coins")
+	end
+end)
+
 hook.Add("Think","WINTASKBAR",function()
 	-- Start Button:
 	if Start:IsValid() then
@@ -636,16 +670,3 @@ hook.Add("Think","TimeDisplay_Winmenu",function()
  local DateTable = string.Split(os.date()," ")
  TimeD:SetText(DateTable[5] .. "\n" .. DateTable[2] .. " " ..DateTable[4])
 end)
-
-
-
-
-
-
-
-
-
-
-
-
-
