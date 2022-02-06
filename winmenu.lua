@@ -17,13 +17,13 @@
 	font = _Localfont, extended = false,
 	size = 15, weight = 500,
 	blursize = 0, scanlines =0,
-    antialias = true, underline = false,
-    italic = false, strikeout = false,
-    symbol = false, rotary = false,
-    shadow = false, additive = false,
-    outline = false
-    } )
-    ------------------------------------------------
+  	antialias = true, underline = false,
+  	italic = false, strikeout = false,
+  	symbol = false, rotary = false,
+  	shadow = false, additive = false,
+  	outline = false
+  	} )
+   	 ------------------------------------------------
 
 -- TaskBar Settings.
 local _WinMenuH = 30
