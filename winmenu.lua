@@ -53,9 +53,9 @@ local WinMenu = vgui.Create("DMenuBar")
 	  WinMenu:Dock( BOTTOM )
 	  WinMenu:SetHeight(_WinMenuH)
 	  function WinMenu:Paint(w,h)
-	  draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
-	  draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
-	  draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
+	  	draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
+	  	draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
+	  	draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
 	  end
 	  function WinMenu:OnRemove()
 	  	
@@ -73,10 +73,10 @@ local Start = WinMenu:Add("DButton",WinMenu)
 	  Start:SetHeight(_WinMenuH)
 	  Start:SetIcon(_StartIcon)
 	  function Start:Paint(w,h)
-	  draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
-	  draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
-	  draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
-	  draw.RoundedBox(0,0,0,w,h,Color(64,64,96,25))
+	  	draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
+	  	draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
+	  	draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
+	  	draw.RoundedBox(0,0,0,w,h,Color(64,64,96,25))
 	  end
 Activepanels.Startbut = Start
 -----------------------------------------------
@@ -100,7 +100,7 @@ local StartMenuCanvas = vgui.Create("DPanel")
       StartMenuCanvas:SetSize(400,500)
       StartMenuCanvas:Hide()
       function StartMenuCanvas:Paint(w,h)
-      draw.RoundedBox(0,0,0,w,h,Color(24,24,32,224))	
+      		draw.RoundedBox(0,0,0,w,h,Color(24,24,32,224))	
       end
 Activepanels.StartMen = StartMenuCanvas
 
@@ -110,7 +110,7 @@ local StartMenuInternal = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuInternal:DockMargin(9,9,0,9)
 	  StartMenuInternal:SetSize(245,482)
 	  function StartMenuInternal:Paint(w,h)
-	  draw.RoundedBox(0,0,0,w,h,Color(48,48,64,128))
+	  	draw.RoundedBox(0,0,0,w,h,Color(48,48,64,128))
 	  end
 local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuInternal2:Dock(LEFT)
@@ -126,6 +126,8 @@ local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 local StartMenuIconFrame = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuIconFrame:SetSize(56,56)
 	  StartMenuIconFrame:SetPos(330-(56/2),9)
+
+-- still working on a steam profile image fetching method!
 --local StartMenuIcon = vgui.Create("DImage",StartMenuIconFrame)
 --	  StartMenuIcon:Center()
 --	  StartMenuIcon:SetSize(46,46)
@@ -246,7 +248,7 @@ local TabName = WinMenu:Add("DButton",WinMenu)
 	  TabName:SetText(Name)
 	  TabName:SetIcon(Icon)
 	  function TabName:Paint(w,h)
-	  draw.RoundedBox(0,0,2,w,h-4,Color(32,32,48,128))	
+	  	draw.RoundedBox(0,0,2,w,h-4,Color(32,32,48,128))	
 	  end
 	  function Frame:OnClose()
 		TabName:Remove()
