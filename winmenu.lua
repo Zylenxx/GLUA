@@ -126,8 +126,6 @@ local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 local StartMenuIconFrame = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuIconFrame:SetSize(56,56)
 	  StartMenuIconFrame:SetPos(330-(56/2),9)
-
--- still working on a steam profile image fetching method!
 --local StartMenuIcon = vgui.Create("DImage",StartMenuIconFrame)
 --	  StartMenuIcon:Center()
 --	  StartMenuIcon:SetSize(46,46)
@@ -184,7 +182,21 @@ local Test = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  end
 -----------------------------------------------
 
--- starfall filebrowser button.
+-- Garbage Collection Tab.
+local GCTab = StartMenuInternal:Add("DButton",StartMenuInternal)
+	  GCTab:SetImage("icon16/application_osx_terminal.png")
+	  GCTab:SetContentAlignment(4)
+	  GCTab:Dock( BOTTOM )
+	  GCTab:DockMargin(0,0,0,0)
+	  GCTab:SetText("Garbage Coll. Display")
+	  GCTab:SetFont("Centronium")
+	  GCTab:SetSize(23,23)
+	  function GCTab:Paint(w,h)
+	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  end
+-----------------------------------------------
+
+-- Tracks Mining Ore cash result.
 local Stonks = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  Stonks:SetImage("icon16/money_add.png")
 	  Stonks:SetContentAlignment(4)
@@ -321,12 +333,12 @@ PrintTable(Activepanels)
 --------------------------------------------------------------------------------
 -- These are all hooks,
 -- Mapped as follows:
-	-- (Done!) Taskbar: 					"WINTASKBAR"	(Expected Usage: Low)
-	-- Painter:						"WINPAINTUI"	(Expected Usage: Medium)
+	-- (Done!) Taskbar: 						"WINTASKBAR"	(Expected Usage: Low)
+	-- Painter:									"WINPAINTUI"	(Expected Usage: Medium)
 	-- (Almost Done!) WindowManagement:			"WINMGR"	(Expected Usage: High)
 	-- (Almost Done!) FileBrowser:				(variable name)	(Expected Usage: Very High)
-	-- Parralel Incorporator:				"INTEGRATE"	(Expected Usage: Very High)
-	-- Tab Quick-switcher:					"WINTABSWITCH"	(Expected Usage: Medium)
+	-- Parralel Incorporator:					"INTEGRATE"	(Expected Usage: Very High)
+	-- Tab Quick-switcher:						"WINTABSWITCH"	(Expected Usage: Medium)
 	
 	
 --[[
@@ -354,15 +366,15 @@ local Prototype = vgui.Create("DFrame")
 	Prototype:SetTitle(browsername)
 	Prototype:IsDraggable(true)
 	function Prototype:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(24,24,32,196))	
-	draw.RoundedBox(0,0,0,w,22,Color(32,32,48,128))	
+		draw.RoundedBox(0,0,0,w,h,Color(24,24,32,196))	
+		draw.RoundedBox(0,0,0,w,22,Color(32,32,48,128))	
 	end
 
 local PrototypePathBar = vgui.Create("DPanel",Prototype)
 	PrototypePathBar:Dock(TOP)
 	PrototypePathBar:DockMargin(9,0,9,9)
 	function PrototypePathBar:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+		draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
 	end
 
 local PrototypeInternal = vgui.Create("DPanel",Prototype)
@@ -370,7 +382,7 @@ local PrototypeInternal = vgui.Create("DPanel",Prototype)
 	PrototypeInternal:DockMargin(9,9,9,9)
 	PrototypeInternal:SetSize(700,230)
 	function PrototypeInternal:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+		draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
 	end
 
 local PrototypeInfo = vgui.Create("DPanel",Prototype)
@@ -378,7 +390,7 @@ local PrototypeInfo = vgui.Create("DPanel",Prototype)
 	PrototypeInfo:DockMargin(9,9,9,9)
 	PrototypeInfo:SetSize(700,70)
 	function PrototypeInfo:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+		draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
 	end
 	local InfoText = vgui.Create("DLabel",PrototypeInfo)
 		  InfoText:Dock(TOP)
@@ -424,8 +436,8 @@ local Back = vgui.Create("DButton")
 	function Back:Paint(w,h)
 		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
 		draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
-		end
-		PrototypeContent:AddItem(Back)
+	end
+	PrototypeContent:AddItem(Back)
 
 	
 
@@ -436,8 +448,8 @@ for FID,FLE in pairs(PrototypeD) do
 		ni2:SetMaterial("icon16/folder.png")
 		ni2:SetText(FLE)
 		function ni2:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-		draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
+			draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
+			draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
 		end
 		
 		function ni2:DoClick()
@@ -463,11 +475,11 @@ for FID,FLE in pairs(PrototypeF) do
 			InfoText2:SetText("Size:".. tostring(math.Round((file.Size(FileDir,"DATA")/1024),2)).. "KB")
 		end
 		function ni:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-		draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+			draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
+			draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
 		end
 		Buttons2[FID]	 = ni
-			PrototypeContent:AddItem(ni)
+		PrototypeContent:AddItem(ni)
 end
 
 hook.Add("Think",hookname,function()
@@ -582,23 +594,23 @@ hook.Add("Think","FBROWSER",function()
 -- function for the filebrowser tabs:
 E_2.DoClick = function()
 	local E2Fetcher = addBrowser("expression2/","E2 FileBrowser","E2MGR")
-	Activepanels.E2MGR = E2Fetcher
-	E2Fetcher.btnMinim:SetDisabled(false)
-	AddTab("E2 FileBrowser",E2Fetcher,{700,400},"icon16/application_osx_terminal.png")
+		Activepanels.E2MGR = E2Fetcher
+		E2Fetcher.btnMinim:SetDisabled(false)
+		AddTab("E2 FileBrowser",E2Fetcher,{700,400},"icon16/application_osx_terminal.png")
 end
 
 L_ua.DoClick = function()
 	local LuaFetcher = addBrowser("lua_editor/","LUA FileBrowser","LUAMGR")
-	Activepanels.LuaF = LuaFetcher
-	LuaFetcher.btnMinim:SetDisabled(false)
-	AddTab("Lua FileBrowser",LuaFetcher,{700,400},"icon16/application_osx_terminal.png")
+		Activepanels.LuaF = LuaFetcher
+		LuaFetcher.btnMinim:SetDisabled(false)
+		AddTab("Lua FileBrowser",LuaFetcher,{700,400},"icon16/application_osx_terminal.png")
 end
 
 Test.DoClick = function()
 	local SF_Fetcher = addBrowser("starfall/","SF FileBrowser","SFMGR")
-	Activepanels.SF = SF_Fetcher
-	SF_Fetcher.btnMinim:SetDisabled(false)
-	AddTab("SF FileBrowser",SF_Fetcher,{700,400},"icon16/star.png")
+		Activepanels.SF = SF_Fetcher
+		SF_Fetcher.btnMinim:SetDisabled(false)
+		AddTab("SF FileBrowser",SF_Fetcher,{700,400},"icon16/star.png")
 	
 end
 
@@ -607,6 +619,25 @@ Stonks.DoClick = function()
 			local Stonks_GoBrr = vgui.Create("DLabel",Stonkers)
 				  Stonks_GoBrr:Dock(FILL)
 				  Stonks_GoBrr:SetFont("Centronium")
+end
+-----------------------------------------------------------------------------------------------------------
+
+
+GCTab.DoClick = function()
+			local GCW = NewWindow("GC Collector",{400,100},{45,15},"icon16/application_osx_terminal.png")	
+			local GCINFO = vgui.Create("DLabel",GCW)
+				  GCINFO:Dock(FILL)
+				  GCINFO:SetSize(200,100)
+				  GCINFO:SetFont("Centronium")
+		    local GCClearbut = vgui.Create("DButton",GCW)
+		          GCClearbut:SetSize(100,30)
+		          GCClearbut:SetPos(300-9,50) -- margin of 9, 50
+		          GCClearbut:SetFont("Centronium")
+		          GCClearbut:SetText("clear\n   manually")
+		          function GCClearbut:Paint(w,h)
+		              	draw.RoundedBox(0,0,0,w,h,Color(0,0,0,96))
+				draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+	             end
 end
 -----------------------------------------------------------------------------------------------------------
 
@@ -625,8 +656,23 @@ hook.Add("Think","Stonks",function()
 			local OreCashGold = (ms.Ores.GetPlayerOre(LocalPlayer(),2)*1200)
 			local OreCashPlat = (ms.Ores.GetPlayerOre(LocalPlayer(),3)*2000)
 			local CashTotal = (OreCashBrz+OreCashSlv+OreCashGold+OreCashPlat)*ms.Ores.GetPlayerMultiplier(LocalPlayer())
-			Activepanels["Stonks Display"]:GetChildren()[6]:SetText("Current trade-in would result in:\n+" .. tostring(math.Round(CashTotal)) .." Points/Coins")
+				Activepanels["Stonks Display"]:GetChildren()[6]:SetText("Current trade-in would result in:\n+" .. tostring(math.Round(CashTotal)) .." Points/Coins")
 	end
+end)
+hook.Add("Think","GCHook",function()
+	if IsValid(Activepanels["GC Collector"]) then
+	    
+        -- Clear Manually button
+        local CM = Activepanels["GC Collector"]:GetChildren()[7]
+        function CM:DoClick()
+            collectgarbage()
+        end
+
+        -- Label for the GC Collector.
+	    local GBUSAGE = math.Round( collectgarbage("count")/(1024^2) ,2)
+		Activepanels["GC Collector"]:GetChildren()[6]:SetText("Garbage Collector" .. "\nCurrent Garbage: " .. GBUSAGE .. "GB\nUsage: " .. math.floor(GBUSAGE/1.5*100) .. "%" )
+
+end
 end)
 
 hook.Add("Think","WINTASKBAR",function()
@@ -670,5 +716,5 @@ end
 )
 hook.Add("Think","TimeDisplay_Winmenu",function()
  local DateTable = string.Split(os.date()," ")
- TimeD:SetText(DateTable[5] .. "\n" .. DateTable[2] .. " " ..DateTable[4])
+ 	TimeD:SetText(DateTable[5] .. "\n" .. DateTable[2] .. " " ..DateTable[4])
 end)
