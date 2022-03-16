@@ -17,13 +17,13 @@
 	font = _Localfont, extended = false,
 	size = 15, weight = 500,
 	blursize = 0, scanlines =0,
-    	antialias = true, underline = false,
-    	italic = false, strikeout = false,
-    	symbol = false, rotary = false,
-    	shadow = false, additive = false,
-    	outline = false
-    	} )
-    	------------------------------------------------
+	antialias = true, underline = false,
+	italic = false, strikeout = false,
+	symbol = false, rotary = false,
+	shadow = false, additive = false,
+	outline = false
+	} )
+    ------------------------------------------------
 
 -- TaskBar Settings.
 local _WinMenuH = 30
@@ -42,6 +42,11 @@ local ActiveTabs   = {}
 -----------------------------------------------
 local Extras       = {}
 -----------------------------------------------
+
+-- buffers.
+local BUFA = 0
+local BUFB = 0
+-----------------------------------------------
 --[[
 #############################################################
 ###################  CONTENTS: MAIN MENU  ###################
@@ -53,9 +58,9 @@ local WinMenu = vgui.Create("DMenuBar")
 	  WinMenu:Dock( BOTTOM )
 	  WinMenu:SetHeight(_WinMenuH)
 	  function WinMenu:Paint(w,h)
-	  	draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
-	  	draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
-	  	draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
+	  draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
+	  draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
+	  draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
 	  end
 	  function WinMenu:OnRemove()
 	  	
@@ -73,10 +78,10 @@ local Start = WinMenu:Add("DButton",WinMenu)
 	  Start:SetHeight(_WinMenuH)
 	  Start:SetIcon(_StartIcon)
 	  function Start:Paint(w,h)
-	  	draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
-	  	draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
-	  	draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
-	  	draw.RoundedBox(0,0,0,w,h,Color(64,64,96,25))
+	  draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
+	  draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
+	  draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
+	  draw.RoundedBox(0,0,0,w,h,Color(64,64,96,25))
 	  end
 Activepanels.Startbut = Start
 -----------------------------------------------
@@ -85,10 +90,10 @@ Activepanels.Startbut = Start
 local DateTable = string.Split(os.date()," ")
 local TimeD = vgui.Create("DButton",WinMenu)
 	  TimeD:Dock(RIGHT)
-	  TimeD:SetWidth(100)
+	  TimeD:SetWidth(150)
 	  TimeD:SetContentAlignment(5)
 	  TimeD:SetFont("Centronium")
-	  TimeD:SetText(DateTable[5] .. "\n" .. DateTable[2] .. " " ..DateTable[4])
+	  TimeD:SetText(DateTable[2] .."," .. DateTable[5] .. "\n" .. " " .. DateTable[4])
 	  function TimeD:Paint()
 	  end
 -----------------------------------------------------
@@ -100,7 +105,7 @@ local StartMenuCanvas = vgui.Create("DPanel")
       StartMenuCanvas:SetSize(400,500)
       StartMenuCanvas:Hide()
       function StartMenuCanvas:Paint(w,h)
-      		draw.RoundedBox(0,0,0,w,h,Color(24,24,32,224))	
+      draw.RoundedBox(0,0,0,w,h,Color(24,24,32,224))	
       end
 Activepanels.StartMen = StartMenuCanvas
 
@@ -110,7 +115,7 @@ local StartMenuInternal = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuInternal:DockMargin(9,9,0,9)
 	  StartMenuInternal:SetSize(245,482)
 	  function StartMenuInternal:Paint(w,h)
-	  	draw.RoundedBox(0,0,0,w,h,Color(48,48,64,128))
+	  draw.RoundedBox(0,0,0,w,h,Color(48,48,64,128))
 	  end
 local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuInternal2:Dock(LEFT)
@@ -126,10 +131,13 @@ local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 local StartMenuIconFrame = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuIconFrame:SetSize(56,56)
 	  StartMenuIconFrame:SetPos(330-(56/2),9)
---local StartMenuIcon = vgui.Create("DImage",StartMenuIconFrame)
---	  StartMenuIcon:Center()
---	  StartMenuIcon:SetSize(46,46)
---	  StartMenuIcon:SetImage("")
+	  
+-- Avatar Frame! This is finally fixed.
+-- You will now see your profile picture!
+local StartMenuIcon = vgui.Create("AvatarImage",StartMenuIconFrame)
+	  StartMenuIcon:Dock(FILL)
+	  StartMenuIcon:DockMargin(4,4,4,4)
+	  StartMenuIcon:SetSteamID(LocalPlayer():SteamID64(),49)
 --------------------------------------------------------------------
 
 --[[
@@ -260,7 +268,7 @@ local TabName = WinMenu:Add("DButton",WinMenu)
 	  TabName:SetText(Name)
 	  TabName:SetIcon(Icon)
 	  function TabName:Paint(w,h)
-	  	draw.RoundedBox(0,0,2,w,h-4,Color(32,32,48,128))	
+	  draw.RoundedBox(0,0,2,w,h-4,Color(32,32,48,128))	
 	  end
 	  function Frame:OnClose()
 		TabName:Remove()
@@ -366,15 +374,15 @@ local Prototype = vgui.Create("DFrame")
 	Prototype:SetTitle(browsername)
 	Prototype:IsDraggable(true)
 	function Prototype:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(24,24,32,196))	
-		draw.RoundedBox(0,0,0,w,22,Color(32,32,48,128))	
+	draw.RoundedBox(0,0,0,w,h,Color(24,24,32,196))	
+	draw.RoundedBox(0,0,0,w,22,Color(32,32,48,128))	
 	end
 
 local PrototypePathBar = vgui.Create("DPanel",Prototype)
 	PrototypePathBar:Dock(TOP)
 	PrototypePathBar:DockMargin(9,0,9,9)
 	function PrototypePathBar:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
 	end
 
 local PrototypeInternal = vgui.Create("DPanel",Prototype)
@@ -382,7 +390,7 @@ local PrototypeInternal = vgui.Create("DPanel",Prototype)
 	PrototypeInternal:DockMargin(9,9,9,9)
 	PrototypeInternal:SetSize(700,230)
 	function PrototypeInternal:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
 	end
 
 local PrototypeInfo = vgui.Create("DPanel",Prototype)
@@ -390,7 +398,7 @@ local PrototypeInfo = vgui.Create("DPanel",Prototype)
 	PrototypeInfo:DockMargin(9,9,9,9)
 	PrototypeInfo:SetSize(700,70)
 	function PrototypeInfo:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
 	end
 	local InfoText = vgui.Create("DLabel",PrototypeInfo)
 		  InfoText:Dock(TOP)
@@ -436,8 +444,8 @@ local Back = vgui.Create("DButton")
 	function Back:Paint(w,h)
 		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
 		draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
-	end
-	PrototypeContent:AddItem(Back)
+		end
+		PrototypeContent:AddItem(Back)
 
 	
 
@@ -448,8 +456,8 @@ for FID,FLE in pairs(PrototypeD) do
 		ni2:SetMaterial("icon16/folder.png")
 		ni2:SetText(FLE)
 		function ni2:Paint(w,h)
-			draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-			draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
+		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
+		draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
 		end
 		
 		function ni2:DoClick()
@@ -475,11 +483,11 @@ for FID,FLE in pairs(PrototypeF) do
 			InfoText2:SetText("Size:".. tostring(math.Round((file.Size(FileDir,"DATA")/1024),2)).. "KB")
 		end
 		function ni:Paint(w,h)
-			draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-			draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
+		draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
 		end
 		Buttons2[FID]	 = ni
-		PrototypeContent:AddItem(ni)
+			PrototypeContent:AddItem(ni)
 end
 
 hook.Add("Think",hookname,function()
@@ -594,23 +602,23 @@ hook.Add("Think","FBROWSER",function()
 -- function for the filebrowser tabs:
 E_2.DoClick = function()
 	local E2Fetcher = addBrowser("expression2/","E2 FileBrowser","E2MGR")
-		Activepanels.E2MGR = E2Fetcher
-		E2Fetcher.btnMinim:SetDisabled(false)
-		AddTab("E2 FileBrowser",E2Fetcher,{700,400},"icon16/application_osx_terminal.png")
+	Activepanels.E2MGR = E2Fetcher
+	E2Fetcher.btnMinim:SetDisabled(false)
+	AddTab("E2 FileBrowser",E2Fetcher,{700,400},"icon16/application_osx_terminal.png")
 end
 
 L_ua.DoClick = function()
 	local LuaFetcher = addBrowser("lua_editor/","LUA FileBrowser","LUAMGR")
-		Activepanels.LuaF = LuaFetcher
-		LuaFetcher.btnMinim:SetDisabled(false)
-		AddTab("Lua FileBrowser",LuaFetcher,{700,400},"icon16/application_osx_terminal.png")
+	Activepanels.LuaF = LuaFetcher
+	LuaFetcher.btnMinim:SetDisabled(false)
+	AddTab("Lua FileBrowser",LuaFetcher,{700,400},"icon16/application_osx_terminal.png")
 end
 
 Test.DoClick = function()
 	local SF_Fetcher = addBrowser("starfall/","SF FileBrowser","SFMGR")
-		Activepanels.SF = SF_Fetcher
-		SF_Fetcher.btnMinim:SetDisabled(false)
-		AddTab("SF FileBrowser",SF_Fetcher,{700,400},"icon16/star.png")
+	Activepanels.SF = SF_Fetcher
+	SF_Fetcher.btnMinim:SetDisabled(false)
+	AddTab("SF FileBrowser",SF_Fetcher,{700,400},"icon16/star.png")
 	
 end
 
@@ -636,7 +644,7 @@ GCTab.DoClick = function()
 		          GCClearbut:SetText("clear\n   manually")
 		          function GCClearbut:Paint(w,h)
 		              	draw.RoundedBox(0,0,0,w,h,Color(0,0,0,96))
-				draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+						draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
 	             end
 end
 -----------------------------------------------------------------------------------------------------------
@@ -656,7 +664,7 @@ hook.Add("Think","Stonks",function()
 			local OreCashGold = (ms.Ores.GetPlayerOre(LocalPlayer(),2)*1200)
 			local OreCashPlat = (ms.Ores.GetPlayerOre(LocalPlayer(),3)*2000)
 			local CashTotal = (OreCashBrz+OreCashSlv+OreCashGold+OreCashPlat)*ms.Ores.GetPlayerMultiplier(LocalPlayer())
-				Activepanels["Stonks Display"]:GetChildren()[6]:SetText("Current trade-in would result in:\n+" .. tostring(math.Round(CashTotal)) .." Points/Coins")
+			Activepanels["Stonks Display"]:GetChildren()[6]:SetText("Multiplier:".. math.Round(ms.Ores.GetPlayerMultiplier(LocalPlayer()),3) .."\nCurrent trade-in would result in:\n+" .. tostring(math.Round(CashTotal)) .." Points/Coins")
 	end
 end)
 hook.Add("Think","GCHook",function()
@@ -669,8 +677,20 @@ hook.Add("Think","GCHook",function()
         end
 
         -- Label for the GC Collector.
-	    local GBUSAGE = math.Round( collectgarbage("count")/(1024^2) ,2)
-		Activepanels["GC Collector"]:GetChildren()[6]:SetText("Garbage Collector" .. "\nCurrent Garbage: " .. GBUSAGE .. "GB\nUsage: " .. math.floor(GBUSAGE/1.5*100) .. "%" )
+	    local GBUSAGE = string.NiceSize(collectgarbage("count")*1024)
+
+	   	local PERCENTAGE = math.Round(100*collectgarbage("count")/(1432*1024),2)
+	   	
+	   	if math.fmod(engine.TickCount(),2) == 1 then 
+	    BUFA = PERCENTAGE
+        else
+	   	BUFB = PERCENTAGE
+   	    end
+   	
+   	    -- Broken Delta?
+	   	local Delta = string.NiceSize(math.Round(math.abs(BUFB-BUFA)*1024*1024))
+	   	
+	    Activepanels["GC Collector"]:GetChildren()[6]:SetText("Garbage Collector" .. "\nCurrent Garbage: " .. GBUSAGE .. "\nUsage: " .. PERCENTAGE .. "%\nDelta:" .. Delta )
 
 end
 end)
@@ -716,5 +736,18 @@ end
 )
 hook.Add("Think","TimeDisplay_Winmenu",function()
  local DateTable = string.Split(os.date()," ")
- 	TimeD:SetText(DateTable[5] .. "\n" .. DateTable[2] .. " " ..DateTable[4])
+ TimeD:SetText(DateTable[2] .."," .. DateTable[5] .. "\n" .. " " .. DateTable[4])
 end)
+
+
+
+
+
+
+
+
+
+
+
+
+
