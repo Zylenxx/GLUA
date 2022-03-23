@@ -76,7 +76,7 @@ Compilepreview = function(TABLE)
 end
 -- skin listing and selected skin.
 SKINSETTINGS.AVAILABLESKINS 		= {}
-SKINSETTINGS.SELECTEDSKIN   		= {"default"}
+SKINSETTINGS.SELECTEDSKIN   		= {"flatgrey"}
 
 
 -- skin transparency usage.
@@ -93,7 +93,7 @@ SKINSETTINGS.AVAILABLESKINS["sakura"]	= {} -- a sakura tree themed skin type.
 SKINSETTINGS.AVAILABLESKINS["flatgrey"] = {} -- a flat grey skintype. > Bento skin from winamp as reference!
 SKINSETTINGS.AVAILABLESKINS["flatblue"] = {} -- a flat blue skintype. > Bento skin from winamp as reference!
 
-SKINSETTINGS.SELECTEDSKIN.SET		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
+local SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
 --[[
 #############################################################
 #################          SKINS            #################
@@ -171,6 +171,232 @@ SKINSETTINGS.SELECTEDSKIN.SET		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECT
 			
 			
 		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
+	
+	
+
+--####################    SAKURA    #######################--
+		
+		--TASKBAR
+		SKINSETTINGS.AVAILABLESKINS["sakura"].BGTB = {
+			Color(255,127,223),
+			Color(255,255,255,128),
+			Color(255,255,255,64)
+		} -- MainColor, Transparency1, Transparency2 (these wont be disabled if USETRANSPARENCY is false!)
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		--STARTBUTTON
+		SKINSETTINGS.AVAILABLESKINS["sakura"].STRBT = {
+			Color(255,127,223),
+			Color(255,255,255,128),
+			Color(255,255,255,64),
+			Color(128,32,128,196)
+		}-- Main, Transparency 1 to 3. Also wont be disabled if USETRANSPARENCY is false.
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		
+		
+		--STARTPANEL
+		SKINSETTINGS.AVAILABLESKINS["sakura"].STPNL = {
+			Color(255,127,223,128)
+		} -- this is affected by USETRANSPARENCY. also will be differently on  UsePPBLURTEX and will have blur!
+		
+		--INTERNAL PANEL
+		SKINSETTINGS.AVAILABLESKINS["sakura"].STIPNL = {
+			Color(128,64,64,128),
+
+		--INTERNAL TABS ON LEFT SIDE
+			Color(255,255,255,32),
+		--INTERNAL TABS ON RIGHT SIDE
+			Color(255,255,255,32)	
+
+		} -- this is affected by USETRANSPARENCY.
+		
+		
+		
+		
+		--TASKBAR TABS
+		SKINSETTINGS.AVAILABLESKINS["sakura"].TBTABS = {
+			Color(128,32,128,196)	
+		} -- this is not affected by USETRANSPARENCY.
+		
+		
+		
+		--WINDOW
+		SKINSETTINGS.AVAILABLESKINS["sakura"].WINDOW = {
+			Color(255,128,255,196),		-- MAIN CANVAS
+			Color(196,32,32,196),   	-- TOP
+			Color(128,64,128,128),		-- BTNMAIN
+			Color(255,255,255,32)		-- BTNBOTTOM
+		} -- this is affected by USETRANSPARENCY.
+
+
+
+
+		--FBROWSER
+		SKINSETTINGS.AVAILABLESKINS["sakura"].FBROWSER = {
+			Color(255,128,255,128),	-- Main Panel
+			Color(196,32,32,196),	-- Top Bar ([ _ [] X ])
+			Color(128,0,0,64),		-- File Panel
+			Color(128,25,25,64), 	-- File Path Bar
+			Color(128,0,0,196),   	-- Directory Button Main
+			Color(255,196,255,32),	-- Directory Button Sheen
+			Color(128,64,128,196),  -- File Button Main
+			Color(255,196,255,32) 	-- File Button Sheen
+	
+		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
+	
+
+--####################    LIGHTTHEME   #######################--
+		
+		--TASKBAR
+		SKINSETTINGS.AVAILABLESKINS["light"].BGTB = {
+			Color(196,196,196),
+			Color(64,64,96,64),
+			Color(64,64,96,64)
+		} -- MainColor, Transparency1, Transparency2 (these wont be disabled if USETRANSPARENCY is false!)
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		--STARTBUTTON
+		SKINSETTINGS.AVAILABLESKINS["light"].STRBT = {
+			Color(196,196,196),
+			Color(64,64,96,32),
+			Color(64,64,96,32),
+			Color(64,64,96,64)
+		}-- Main, Transparency 1 to 3. Also wont be disabled if USETRANSPARENCY is false.
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		
+		
+		--STARTPANEL
+		SKINSETTINGS.AVAILABLESKINS["light"].STPNL = {
+			Color(255,255,255,128)
+		} -- this is affected by USETRANSPARENCY. also will be differently on  UsePPBLURTEX and will have blur!
+		
+		--INTERNAL PANEL
+		SKINSETTINGS.AVAILABLESKINS["light"].STIPNL = {
+			Color(128,128,128,128),
+
+		--INTERNAL TABS ON LEFT SIDE
+			Color(255,0,0,128),
+		--INTERNAL TABS ON RIGHT SIDE
+			Color(255,255,255,128)	
+
+		} -- this is affected by USETRANSPARENCY.
+		
+		
+		
+		
+		--TASKBAR TABS
+		SKINSETTINGS.AVAILABLESKINS["light"].TBTABS = {
+			Color(128,128,128,128)	
+		} -- this is not affected by USETRANSPARENCY.
+		
+		
+		
+		--WINDOW
+		SKINSETTINGS.AVAILABLESKINS["light"].WINDOW = {
+			Color(255,255,255,128),	-- MAIN CANVAS
+			Color(128,128,128,64),    -- TOP
+			Color(0,0,0,64),		-- BTNMAIN
+			Color(96,96,128,24)		-- BTNBOTTOM
+		} -- this is affected by USETRANSPARENCY and my eyes are in pain.
+
+
+
+
+		--FBROWSER
+		SKINSETTINGS.AVAILABLESKINS["light"].FBROWSER = {
+			Color(255,255,255,128),	-- Main Panel
+			Color(128,128,128,64),	-- Top Bar ([ _ [] X ])
+			Color(96,96,96,32),	-- File Panel
+			Color(255,255,255), 	-- File Path Bar
+			Color(0,0,255,64),   	-- Directory Button Main
+			Color(128,128,128,12),	-- Directory Button Sheen
+			Color(0,128,255,64),   	-- File Button Main
+			Color(96,96,128,24) 	-- File Button Sheen
+			
+			
+		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
+	
+	
+
+--####################    FLATGREY   #######################--
+		
+		--TASKBAR
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].BGTB = {
+			Color(32,32,32),
+			Color(64,64,96,0),
+			Color(64,64,96,0)
+		} -- MainColor, Transparency1, Transparency2 (these wont be disabled if USETRANSPARENCY is false!)
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		--STARTBUTTON
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].STRBT = {
+			Color(32,32,32),
+			Color(64,64,96,0),
+			Color(64,64,96,0),
+			Color(0,0,0,12)
+		}-- Main, Transparency 1 to 3. Also wont be disabled if USETRANSPARENCY is false.
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		
+		
+		--STARTPANEL
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].STPNL = {
+			Color(32,32,32,224)
+		} -- this is affected by USETRANSPARENCY. also will be differently on  UsePPBLURTEX and will have blur!
+		
+		--INTERNAL PANEL
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].STIPNL = {
+			Color(0,0,0,128),
+
+		--INTERNAL TABS ON LEFT SIDE
+			Color(0,0,0,128),
+		--INTERNAL TABS ON RIGHT SIDE
+			Color(0,0,0,196)	
+
+		} -- this is affected by USETRANSPARENCY.
+		
+		
+		
+		
+		--TASKBAR TABS
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].TBTABS = {
+			Color(0,0,0,128)	
+		} -- this is not affected by USETRANSPARENCY.
+		
+		
+		
+		--WINDOW
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].WINDOW = {
+			Color(32,32,32,196),	-- MAIN CANVAS
+			Color(0,0,0,128),    -- TOP
+			Color(0,0,0,96),		-- BTNMAIN
+			Color(96,96,96,24)		-- BTNBOTTOM
+		} -- this is affected by USETRANSPARENCY.
+
+
+
+
+		--FBROWSER
+		SKINSETTINGS.AVAILABLESKINS["flatgrey"].FBROWSER = {
+			Color(32,32,32,196),	-- Main Panel
+			Color(0,0,0,128),	-- Top Bar ([ _ [] X ])
+			Color(96,96,96,196),	-- File Panel
+			Color(128,128,128), 	-- File Path Bar
+			Color(32,32,64,196),   	-- Directory Button Main
+			Color(128,128,128,0),	-- Directory Button Sheen
+			Color(32,48,64,196),   	-- File Button Main
+			Color(96,96,128,0) 	-- File Button Sheen
+			
+			
+		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
+	
+	
+
+	
+	
+	
 --[[
 #############################################################
 ###################  CONTENTS: MAIN MENU  ###################
@@ -182,9 +408,9 @@ local WinMenu = vgui.Create("DMenuBar")
 	  WinMenu:Dock( BOTTOM )
 	  WinMenu:SetHeight(_WinMenuH)
 	  function WinMenu:Paint(w,h)
-	  draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
-	  draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
-	  draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
+	  draw.RoundedBox(0,0,0,w,h,SETSKIN.BGTB[1])
+	  draw.RoundedBox(0,0,(h/2)-1,w,2,SETSKIN.BGTB[2])
+	  draw.RoundedBox(0,0,0,w,h/2,SETSKIN.BGTB[3])
 	  end
 	  function WinMenu:OnRemove()
 	  	
@@ -202,10 +428,10 @@ local Start = WinMenu:Add("DButton",WinMenu)
 	  Start:SetHeight(_WinMenuH)
 	  Start:SetIcon(_StartIcon)
 	  function Start:Paint(w,h)
-	  draw.RoundedBox(0,0,0,w,h,Color(24,24,32))
-	  draw.RoundedBox(0,0,(h/2)-1,w,2,Color(64,64,96,12))
-	  draw.RoundedBox(0,0,0,w,h/2,Color(64,64,96,12))
-	  draw.RoundedBox(0,0,0,w,h,Color(64,64,96,25))
+	  draw.RoundedBox(0,0,0,w,h,SETSKIN.STRBT[1])
+	  draw.RoundedBox(0,0,(h/2)-1,w,2,SETSKIN.STRBT[2])
+	  draw.RoundedBox(0,0,0,w,h/2,SETSKIN.STRBT[3])
+	  draw.RoundedBox(0,0,0,w,h,SETSKIN.STRBT[4])
 	  end
 Activepanels.Startbut = Start
 -----------------------------------------------
@@ -229,7 +455,7 @@ local StartMenuCanvas = vgui.Create("DPanel")
       StartMenuCanvas:SetSize(400,500)
       StartMenuCanvas:Hide()
       function StartMenuCanvas:Paint(w,h)
-      draw.RoundedBox(0,0,0,w,h,Color(24,24,32,224))	
+      draw.RoundedBox(0,0,0,w,h,SETSKIN.STPNL[1])	
       end
 Activepanels.StartMen = StartMenuCanvas
 
@@ -239,7 +465,7 @@ local StartMenuInternal = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuInternal:DockMargin(9,9,0,9)
 	  StartMenuInternal:SetSize(245,482)
 	  function StartMenuInternal:Paint(w,h)
-	  draw.RoundedBox(0,0,0,w,h,Color(48,48,64,128))
+	  draw.RoundedBox(0,0,0,w,h,SETSKIN.STIPNL[1])
 	  end
 local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuInternal2:Dock(LEFT)
@@ -255,6 +481,9 @@ local StartMenuInternal2 = vgui.Create("DPanel",StartMenuCanvas)
 local StartMenuIconFrame = vgui.Create("DPanel",StartMenuCanvas)
 	  StartMenuIconFrame:SetSize(56,56)
 	  StartMenuIconFrame:SetPos(330-(56/2),9)
+	  function StartMenuIconFrame:Paint(w,h)
+	  	draw.RoundedBox(8,0,0,w,h,SETSKIN.STIPNL[1])
+	  end
 	  
 -- Avatar Frame! This is finally fixed.
 -- You will now see your profile picture!
@@ -262,6 +491,7 @@ local StartMenuIcon = vgui.Create("AvatarImage",StartMenuIconFrame)
 	  StartMenuIcon:Dock(FILL)
 	  StartMenuIcon:DockMargin(4,4,4,4)
 	  StartMenuIcon:SetSteamID(LocalPlayer():SteamID64(),49)
+
 --------------------------------------------------------------------
 
 --[[
@@ -280,7 +510,7 @@ local E_2 = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  E_2:SetFont("Centronium")
 	  E_2:SetSize(23,23)
 	  function E_2:Paint(w,h)
-	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  	draw.RoundedBox(0,0,1,w,h-2,SETSKIN.STIPNL[1])
 	  end
 -----------------------------------------------
 
@@ -295,7 +525,7 @@ local L_ua = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  L_ua:SetFont("Centronium")
 	  L_ua:SetSize(23,23)
 	  function L_ua:Paint(w,h)
-	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  	draw.RoundedBox(0,0,1,w,h-2,SETSKIN.STIPNL[1])
 	  end
 -----------------------------------------------
 
@@ -310,7 +540,7 @@ local Test = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  Test:SetFont("Centronium")
 	  Test:SetSize(23,23)
 	  function Test:Paint(w,h)
-	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  	draw.RoundedBox(0,0,1,w,h-2,SETSKIN.STIPNL[1])
 	  end
 -----------------------------------------------
 
@@ -324,7 +554,7 @@ local GCTab = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  GCTab:SetFont("Centronium")
 	  GCTab:SetSize(23,23)
 	  function GCTab:Paint(w,h)
-	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  	draw.RoundedBox(0,0,1,w,h-2,SETSKIN.STIPNL[1])
 	  end
 -----------------------------------------------
 
@@ -338,7 +568,7 @@ local Stonks = StartMenuInternal:Add("DButton",StartMenuInternal)
 	  Stonks:SetFont("Centronium")
 	  Stonks:SetSize(23,23)
 	  function Stonks:Paint(w,h)
-	  	draw.RoundedBox(0,0,1,w,h-2,Color(24,24,32,224))
+	  	draw.RoundedBox(0,0,1,w,h-2,SETSKIN.STIPNL[1])
 	  end
 -----------------------------------------------
 
@@ -355,7 +585,7 @@ local MainButton1 = StartMenuInternal2:Add("DButton",StartMenuInternal)
 	MainButton1:SetText("Remove UI")
 	MainButton1:SetFont("Centronium")
 	function MainButton1:Paint(w,h)
-	  	draw.RoundedBox(0,0,0,w,h,Color(24,24,32,128))
+	  	draw.RoundedBox(0,0,0,w,h,SETSKIN.STIPNL[2])
 	end
 	MainButton1.DoClick = function()
 		for N,Panel in pairs(Activepanels) do
@@ -392,7 +622,7 @@ local TabName = WinMenu:Add("DButton",WinMenu)
 	  TabName:SetText(Name)
 	  TabName:SetIcon(Icon)
 	  function TabName:Paint(w,h)
-	  draw.RoundedBox(0,0,2,w,h-4,Color(32,32,48,128))	
+	  draw.RoundedBox(0,0,2,w,h-4,SETSKIN.TBTABS[1])	
 	  end
 	  function Frame:OnClose()
 		TabName:Remove()
@@ -435,8 +665,8 @@ local Frame = vgui.Create("DFrame")
 	  Frame.btnMinim:SetDisabled(false)
 	  
 		function Frame:Paint(w,h)
-			draw.RoundedBox(0,0,0,w,h,Color(24,24,32,196))	
-			draw.RoundedBox(0,0,0,w,22,Color(32,32,48,128))	
+			draw.RoundedBox(0,0,0,w,h,SETSKIN.WINDOW[1])	
+			draw.RoundedBox(0,0,0,w,22,SETSKIN.WINDOW[2])	
 		end
 	  
 	 		-- Call a tab associated with the frame.
@@ -498,15 +728,15 @@ local Prototype = vgui.Create("DFrame")
 	Prototype:SetTitle(browsername)
 	Prototype:IsDraggable(true)
 	function Prototype:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(24,24,32,196))	
-	draw.RoundedBox(0,0,0,w,22,Color(32,32,48,128))	
+	draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[1])	
+	draw.RoundedBox(0,0,0,w,22,SETSKIN.FBROWSER[2])	
 	end
 
 local PrototypePathBar = vgui.Create("DPanel",Prototype)
 	PrototypePathBar:Dock(TOP)
 	PrototypePathBar:DockMargin(9,0,9,9)
 	function PrototypePathBar:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+	draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[4])	
 	end
 
 local PrototypeInternal = vgui.Create("DPanel",Prototype)
@@ -514,7 +744,7 @@ local PrototypeInternal = vgui.Create("DPanel",Prototype)
 	PrototypeInternal:DockMargin(9,9,9,9)
 	PrototypeInternal:SetSize(700,230)
 	function PrototypeInternal:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+	draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[3])	
 	end
 
 local PrototypeInfo = vgui.Create("DPanel",Prototype)
@@ -522,7 +752,7 @@ local PrototypeInfo = vgui.Create("DPanel",Prototype)
 	PrototypeInfo:DockMargin(9,9,9,9)
 	PrototypeInfo:SetSize(700,70)
 	function PrototypeInfo:Paint(w,h)
-	draw.RoundedBox(0,0,0,w,h,Color(96,96,96,196))	
+	draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[3])	
 	end
 	local InfoText = vgui.Create("DLabel",PrototypeInfo)
 		  InfoText:Dock(TOP)
@@ -537,7 +767,7 @@ local PrototypeSearch = vgui.Create("DLabel",PrototypePathBar)
 	PrototypeSearch:Dock(BOTTOM)
 	PrototypeSearch:DockMargin(9,0,0,3)
 	PrototypeSearch:SetText(CurDir)
-	PrototypeSearch:SetColor(Color(128,128,128))
+	PrototypeSearch:SetColor(SETSKIN.FBROWSER[3])
 
 local PrototypeScroll = vgui.Create("DScrollPanel",PrototypeInternal)
 	PrototypeScroll:Dock( FILL )
@@ -566,8 +796,8 @@ local Back = vgui.Create("DButton")
 	Back:SetMaterial("icon16/folder.png")
 	Back:SetText("..")
 	function Back:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-		draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
+		draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[5])
+		draw.RoundedBox(0,0,0,w,h/2,SETSKIN.FBROWSER[6])
 		end
 		PrototypeContent:AddItem(Back)
 
@@ -580,8 +810,8 @@ for FID,FLE in pairs(PrototypeD) do
 		ni2:SetMaterial("icon16/folder.png")
 		ni2:SetText(FLE)
 		function ni2:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-		draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
+		draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[5])
+		draw.RoundedBox(0,0,0,w,h/2,SETSKIN.FBROWSER[6])
 		end
 		
 		function ni2:DoClick()
@@ -607,8 +837,8 @@ for FID,FLE in pairs(PrototypeF) do
 			InfoText2:SetText("Size:".. tostring(math.Round((file.Size(FileDir,"DATA")/1024),2)).. "KB")
 		end
 		function ni:Paint(w,h)
-		draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-		draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+		draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[7])
+		draw.RoundedBox(0,0,0,w,h/2,SETSKIN.FBROWSER[8])
 		end
 		Buttons2[FID]	 = ni
 			PrototypeContent:AddItem(ni)
@@ -632,8 +862,8 @@ local function UpdateGrid()
 			Back:SetMaterial("icon16/folder.png")
 			Back:SetText("..")
 			function Back:Paint(w,h)
-				draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-				draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
+				draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[5])
+				draw.RoundedBox(0,0,0,w,h/2,SETSKIN.FBROWSER[6])
 			end
 				PrototypeContent:AddItem(Back)
 			-- print("[LUAFBROWSER]BACKBUT_COMPLETE")
@@ -647,8 +877,8 @@ local function UpdateGrid()
 						ni2:SetMaterial("icon16/folder.png")
 						ni2:SetText(FLE)
 						function ni2:Paint(w,h)
-							draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-							draw.RoundedBox(0,0,0,w,h/2,Color(128,128,128,12))
+							draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[5])
+							draw.RoundedBox(0,0,0,w,h/2,SETSKIN.FBROWSER[6])
 						end
 						-- print("DIRUPDATE:")
 						Directories[FLE] = ni2
@@ -673,8 +903,8 @@ local function UpdateGrid()
 					ni:SetMaterial("icon16/application_osx_terminal.png")
 					ni:SetText(FLE)
 					function ni:Paint(w,h)
-						draw.RoundedBox(0,0,0,w,h,Color(0,0,0,196))
-						draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+						draw.RoundedBox(0,0,0,w,h,SETSKIN.FBROWSER[7])
+						draw.RoundedBox(0,0,0,w,h/2,SETSKIN.FBROWSER[8])
 					end
 					function ni:DoClick()
 						FileDir = CurDir.. FLE	
@@ -767,8 +997,8 @@ GCTab.DoClick = function()
 		          GCClearbut:SetFont("Centronium")
 		          GCClearbut:SetText("clear\n   manually")
 		          function GCClearbut:Paint(w,h)
-		              	draw.RoundedBox(0,0,0,w,h,Color(0,0,0,96))
-						draw.RoundedBox(0,0,0,w,h/2,Color(96,96,128,24))
+		              	draw.RoundedBox(0,0,0,w,h,SETSKIN.WINDOW[3])
+						draw.RoundedBox(0,0,0,w,h/2,SETSKIN.WINDOW[4])
 	             end
 end
 -----------------------------------------------------------------------------------------------------------
