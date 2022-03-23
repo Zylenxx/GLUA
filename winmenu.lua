@@ -46,7 +46,131 @@ local Extras       = {}
 -- buffers.
 local BUFA = 0
 local BUFB = 0
+
+local DeltaBuffer = {}
+local MEDIAN = 0 -- we take the median of every entry in the buffer above.
 -----------------------------------------------
+--[[
+#############################################################
+#################        SKINSETTINGS       #################
+#############################################################
+
+soon to add:
+-- • ShowProfile
+-- • UseRoundedBorders
+-- • UsePPBLURTEX (requires easychat!)
+-- •
+
+]]--
+
+-- base class
+SKINSETTINGS = {}
+
+-- preview function for meta chat.
+Compilepreview = function(TABLE)
+	local STR = "" 
+	local TabletoColor = function(table) return "<color=".. table["r"] .. "," .. table["g"] .. "," .. table["b"] .. ">" end 
+	for  N,COLOR in pairs(TABLE) do 
+		STR = STR .. TabletoColor(COLOR) .. "<texture=models/debug/debugwhite><stop>" end 
+		saylocal(STR) 
+end
+-- skin listing and selected skin.
+SKINSETTINGS.AVAILABLESKINS 		= {}
+SKINSETTINGS.SELECTEDSKIN   		= {"default"}
+
+
+-- skin transparency usage.
+SKINSETTINGS.DOTRANSPARENCY 		= true
+SKINSETTINGS.TRANSPARENCYPERCENTAGE = 100
+
+-----------------------------------------------
+
+-- planned skins:
+SKINSETTINGS.AVAILABLESKINS["default"]	= {} -- default. DarkBlue skin type.
+SKINSETTINGS.AVAILABLESKINS["matrix"]	= {} -- a darkgreen/green skin type.
+SKINSETTINGS.AVAILABLESKINS["light"]	= {} -- a light themed    skin type.
+SKINSETTINGS.AVAILABLESKINS["sakura"]	= {} -- a sakura tree themed skin type.
+SKINSETTINGS.AVAILABLESKINS["flatgrey"] = {} -- a flat grey skintype. > Bento skin from winamp as reference!
+SKINSETTINGS.AVAILABLESKINS["flatblue"] = {} -- a flat blue skintype. > Bento skin from winamp as reference!
+
+SKINSETTINGS.SELECTEDSKIN.SET		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
+--[[
+#############################################################
+#################          SKINS            #################
+#############################################################
+]]--
+
+--####################    DEFAULT   #######################--
+		
+		--TASKBAR
+		SKINSETTINGS.AVAILABLESKINS["default"].BGTB = {
+			Color(24,24,32),
+			Color(64,64,96,12),
+			Color(64,64,96,12)
+		} -- MainColor, Transparency1, Transparency2 (these wont be disabled if USETRANSPARENCY is false!)
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		--STARTBUTTON
+		SKINSETTINGS.AVAILABLESKINS["default"].STRBT = {
+			Color(24,24,32),
+			Color(64,64,96,12),
+			Color(64,64,96,12),
+			Color(64,64,96,25)
+		}-- Main, Transparency 1 to 3. Also wont be disabled if USETRANSPARENCY is false.
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		
+		
+		--STARTPANEL
+		SKINSETTINGS.AVAILABLESKINS["default"].STPNL = {
+			Color(24,24,32,224)
+		} -- this is affected by USETRANSPARENCY. also will be differently on  UsePPBLURTEX and will have blur!
+		
+		--INTERNAL PANEL
+		SKINSETTINGS.AVAILABLESKINS["default"].STIPNL = {
+			Color(48,48,64,128),
+
+		--INTERNAL TABS ON LEFT SIDE
+			Color(24,24,32,224),
+		--INTERNAL TABS ON RIGHT SIDE
+			Color(24,24,32,128)	
+
+		} -- this is affected by USETRANSPARENCY.
+		
+		
+		
+		
+		--TASKBAR TABS
+		SKINSETTINGS.AVAILABLESKINS["default"].TBTABS = {
+			Color(32,32,48,128)	
+		} -- this is not affected by USETRANSPARENCY.
+		
+		
+		
+		--WINDOW
+		SKINSETTINGS.AVAILABLESKINS["default"].WINDOW = {
+			Color(24,24,32,196),	-- MAIN CANVAS
+			Color(32,32,48,128),    -- TOP
+			Color(0,0,0,96),		-- BTNMAIN
+			Color(96,96,128,24)		-- BTNBOTTOM
+		} -- this is affected by USETRANSPARENCY.
+
+
+
+
+		--FBROWSER
+		SKINSETTINGS.AVAILABLESKINS["default"].FBROWSER = {
+			Color(24,24,32,196),	-- Main Panel
+			Color(32,32,48,128),	-- Top Bar ([ _ [] X ])
+			Color(96,96,96,196),	-- File Panel
+			Color(128,128,128), 	-- File Path Bar
+			Color(0,0,0,196),   	-- Directory Button Main
+			Color(128,128,128,12),	-- Directory Button Sheen
+			Color(0,0,0,196),   	-- File Button Main
+			Color(96,96,128,24) 	-- File Button Sheen
+			
+			
+		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
 --[[
 #############################################################
 ###################  CONTENTS: MAIN MENU  ###################
@@ -687,10 +811,17 @@ hook.Add("Think","GCHook",function()
 	   	BUFB = PERCENTAGE
    	    end
    	
-   	    -- Broken Delta?
-	   	local Delta = string.NiceSize(math.Round(math.abs(BUFB-BUFA)*1024*1024))
-	   	
-	    Activepanels["GC Collector"]:GetChildren()[6]:SetText("Garbage Collector" .. "\nCurrent Garbage: " .. GBUSAGE .. "\nUsage: " .. PERCENTAGE .. "%\nDelta:" .. Delta )
+   	    DeltaBuffer[math.fmod(engine.TickCount(),16)] = BUFB-BUFA
+   	    if math.fmod(engine.TickCount(),16) == 0 then
+   			MEDIAN = 0
+   	    for N,DLTA in pairs(DeltaBuffer) do
+   	    	MEDIAN = MEDIAN+DLTA
+   	    end
+   	    	MEDIAN = MEDIAN/15 or 0
+   	    end
+	   
+	   	local Delta = string.NiceSize(math.Round(math.abs(MEDIAN)*1024*1024*33))
+	    Activepanels["GC Collector"]:GetChildren()[6]:SetText("Garbage Collector" .. "\nCurrent Garbage: " .. GBUSAGE .. "\nUsage: " .. PERCENTAGE .. "%\nDelta:" .. Delta .. "pS")
 
 end
 end)
@@ -738,16 +869,3 @@ hook.Add("Think","TimeDisplay_Winmenu",function()
  local DateTable = string.Split(os.date()," ")
  TimeD:SetText(DateTable[2] .."," .. DateTable[5] .. "\n" .. " " .. DateTable[4])
 end)
-
-
-
-
-
-
-
-
-
-
-
-
-
