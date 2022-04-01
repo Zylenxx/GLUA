@@ -11,7 +11,6 @@
 	-- NonStock Font. Obtained here:
 	-- https://freefontsdownload.net/free-eurostile_extended-font-72055.htm
 	
-	
 	-- Startmenu Font.
 	surface.CreateFont( "Centronium" , {
 	font = _Localfont, extended = false,
@@ -50,6 +49,27 @@ local BUFB = 0
 local DeltaBuffer = {}
 local MEDIAN = 0 -- we take the median of every entry in the buffer above.
 -----------------------------------------------
+
+-- Debug.
+   -- incase the menu gets stuck and cant be removed.
+   vgui_CleanSafe = function() 
+   	LocalPlayer():ConCommand("vgui_cleanup")  
+   	timer.Simple(1.244,function() initE2Editor() end) 
+   end
+
+
+SetSkin = function(SkinType)
+	
+	SKINSETTINGS.SELECTEDSKIN   		= {SkinType}
+	SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
+	for _,PNL in pairs(Activepanels) do
+	PNL:Paint(PNL:GetSize())
+	end
+	
+end
+
+
+
 --[[
 #############################################################
 #################        SKINSETTINGS       #################
@@ -76,7 +96,7 @@ Compilepreview = function(TABLE)
 end
 -- skin listing and selected skin.
 SKINSETTINGS.AVAILABLESKINS 		= {}
-SKINSETTINGS.SELECTEDSKIN   		= {"flatgrey"}
+SKINSETTINGS.SELECTEDSKIN   		= {"default"}
 
 
 -- skin transparency usage.
@@ -164,6 +184,79 @@ local SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
 			Color(32,32,48,128),	-- Top Bar ([ _ [] X ])
 			Color(96,96,96,196),	-- File Panel
 			Color(128,128,128), 	-- File Path Bar
+			Color(0,0,0,196),   	-- Directory Button Main
+			Color(128,128,128,12),	-- Directory Button Sheen
+			Color(0,0,0,196),   	-- File Button Main
+			Color(96,96,128,24) 	-- File Button Sheen
+			
+			
+		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
+	
+	
+--####################    MATRIX   #######################--
+		
+		--TASKBAR
+		SKINSETTINGS.AVAILABLESKINS["matrix"].BGTB = {
+			Color(16,32,16),
+			Color(32,96,32,128),
+			Color(0,96,0,128)
+		} -- MainColor, Transparency1, Transparency2 (these wont be disabled if USETRANSPARENCY is false!)
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		--STARTBUTTON
+		SKINSETTINGS.AVAILABLESKINS["matrix"].STRBT = {
+			Color(16,32,16),
+			Color(64,96,64,128),
+			Color(64,96,64,128),
+			Color(64,96,64,25)
+		}-- Main, Transparency 1 to 3. Also wont be disabled if USETRANSPARENCY is false.
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		
+		
+		--STARTPANEL
+		SKINSETTINGS.AVAILABLESKINS["matrix"].STPNL = {
+			Color(24,32,24,224)
+		} -- this is affected by USETRANSPARENCY. also will be differently on  UsePPBLURTEX and will have blur!
+		
+		--INTERNAL PANEL
+		SKINSETTINGS.AVAILABLESKINS["matrix"].STIPNL = {
+			Color(0,256,0,8),
+
+		--INTERNAL TABS ON LEFT SIDE
+			Color(24,32,24,224),
+		--INTERNAL TABS ON RIGHT SIDE
+			Color(0,255,0,128)	
+
+		} -- this is affected by USETRANSPARENCY.
+		
+		
+		
+		
+		--TASKBAR TABS
+		SKINSETTINGS.AVAILABLESKINS["matrix"].TBTABS = {
+			Color(32,32,48,128)	
+		} -- this is not affected by USETRANSPARENCY.
+		
+		
+		
+		--WINDOW
+		SKINSETTINGS.AVAILABLESKINS["matrix"].WINDOW = {
+			Color(24,32,24,196),	-- MAIN CANVAS
+			Color(0,128,0,128),    -- TOP
+			Color(0,0,0,96),		-- BTNMAIN
+			Color(96,128,96,24)		-- BTNBOTTOM
+		} -- this is affected by USETRANSPARENCY.
+
+
+
+
+		--FBROWSER
+		SKINSETTINGS.AVAILABLESKINS["matrix"].FBROWSER = {
+			Color(24,32,24,196),	-- Main Panel
+			Color(0,128,0,128),	-- Top Bar ([ _ [] X ])
+			Color(96,128,96,196),	-- File Panel
+			Color(96,128,96), 	-- File Path Bar
 			Color(0,0,0,196),   	-- Directory Button Main
 			Color(128,128,128,12),	-- Directory Button Sheen
 			Color(0,0,0,196),   	-- File Button Main
@@ -384,6 +477,81 @@ local SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
 			Color(0,0,0,128),	-- Top Bar ([ _ [] X ])
 			Color(96,96,96,196),	-- File Panel
 			Color(128,128,128), 	-- File Path Bar
+			Color(32,32,64,196),   	-- Directory Button Main
+			Color(128,128,128,0),	-- Directory Button Sheen
+			Color(32,48,64,196),   	-- File Button Main
+			Color(96,96,128,0) 	-- File Button Sheen
+			
+			
+		} -- this is affected by USETRANSPARENCY and buttons will be flat on flatgrey and flatblue.
+	
+	
+
+	
+--####################    FLATBLUE   #######################--
+		
+		--TASKBAR
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].BGTB = {
+			Color(32,32,64),
+			Color(64,64,96,0),
+			Color(64,64,96,0)
+		} -- MainColor, Transparency1, Transparency2 (these wont be disabled if USETRANSPARENCY is false!)
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		--STARTBUTTON
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].STRBT = {
+			Color(48,48,64),
+			Color(64,64,96,0),
+			Color(64,64,96,0),
+			Color(0,0,0,12)
+		}-- Main, Transparency 1 to 3. Also wont be disabled if USETRANSPARENCY is false.
+		-- this will have no transparency on FlatGrey or FlatBlue.
+		
+		
+		
+		--STARTPANEL
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].STPNL = {
+			Color(32,32,64,224)
+		} -- this is affected by USETRANSPARENCY. also will be differently on  UsePPBLURTEX and will have blur!
+		
+		--INTERNAL PANEL
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].STIPNL = {
+			Color(0,0,0,128),
+
+		--INTERNAL TABS ON LEFT SIDE
+			Color(0,0,0,128),
+		--INTERNAL TABS ON RIGHT SIDE
+			Color(0,0,0,196)	
+
+		} -- this is affected by USETRANSPARENCY.
+		
+		
+		
+		
+		--TASKBAR TABS
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].TBTABS = {
+			Color(0,0,0,128)	
+		} -- this is not affected by USETRANSPARENCY.
+		
+		
+		
+		--WINDOW
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].WINDOW = {
+			Color(32,32,64,196),	-- MAIN CANVAS
+			Color(0,0,0,128),    -- TOP
+			Color(0,0,0,96),		-- BTNMAIN
+			Color(96,96,96,24)		-- BTNBOTTOM
+		} -- this is affected by USETRANSPARENCY.
+
+
+
+
+		--FBROWSER
+		SKINSETTINGS.AVAILABLESKINS["flatblue"].FBROWSER = {
+			Color(32,32,64,196),	-- Main Panel
+			Color(0,0,0,128),	-- Top Bar ([ _ [] X ])
+			Color(96,96,128,196),	-- File Panel
+			Color(128,128,160), 	-- File Path Bar
 			Color(32,32,64,196),   	-- Directory Button Main
 			Color(128,128,128,0),	-- Directory Button Sheen
 			Color(32,48,64,196),   	-- File Button Main
