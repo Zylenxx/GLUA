@@ -1,4 +1,4 @@
-
+ 
 --[[
 #############################################################
 #################  CONSTANTS AND VARIABLES  #################
@@ -49,7 +49,29 @@ local BUFB = 0
 local DeltaBuffer = {}
 local MEDIAN = 0 -- we take the median of every entry in the buffer above.
 -----------------------------------------------
-
+-- color to hex converter.
+	
+  function nHex(n)
+  n=math.floor(math.min(16,math.max(0,n)))
+     if n < 10 then return tostring(n) end
+     if n == 10 then return "a" end
+     if n == 11 then return "b" end
+     if n == 12 then return "c" end
+     if n == 13 then return "d" end
+     if n == 14 then return "e" end
+     if n == 15 then return "f" end
+  end
+  
+  function toHexCompact(COL)
+	local R = COL["r"]/16
+    local G = COL["g"]/16
+    local B = COL["b"]/16
+    
+    local HC = nHex(R) .. nHex(G) .. nHex(B)
+  
+    return HC
+    
+  end
 -- Debug.
    -- incase the menu gets stuck and cant be removed.
    vgui_CleanSafe = function() 
@@ -57,16 +79,6 @@ local MEDIAN = 0 -- we take the median of every entry in the buffer above.
    	timer.Simple(1.244,function() initE2Editor() end) 
    end
 
-
-SetSkin = function(SkinType)
-	
-	SKINSETTINGS.SELECTEDSKIN   		= {SkinType}
-	SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
-	for _,PNL in pairs(Activepanels) do
-	PNL:Paint(PNL:GetSize())
-	end
-	
-end
 
 
 
@@ -85,14 +97,14 @@ soon to add:
 
 -- base class
 SKINSETTINGS = {}
-
 -- preview function for meta chat.
 Compilepreview = function(TABLE)
 	local STR = "" 
-	local TabletoColor = function(table) return "<color=".. table["r"] .. "," .. table["g"] .. "," .. table["b"] .. ">" end 
-	for  N,COLOR in pairs(TABLE) do 
-		STR = STR .. TabletoColor(COLOR) .. "<texture=models/debug/debugwhite><stop>" end 
-		saylocal(STR) 
+	local TabletoColor = function(table) return "<c=".. toHexCompact(table) .. ">" end 
+	for  N,COLOR in pairs(TABLE.FBROWSER) do 
+		STR = STR .. TabletoColor(COLOR) .. "<texture=models/debug/debugwhite>" end
+	    STR = STR .. "<stop>"
+		return STR 
 end
 -- skin listing and selected skin.
 SKINSETTINGS.AVAILABLESKINS 		= {}
@@ -570,7 +582,35 @@ local SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
 ###################  CONTENTS: MAIN MENU  ###################
 #############################################################
 ]]--
+SetSkin = function(SkinType)
+	
+	SKINSETTINGS.SELECTEDSKIN   		= {SkinType}
+	SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
+		
+	for N,Panel in pairs(Activepanels) do
+			-- make sure to also clear hooks KEKW
+			Panel:Remove()
+	end
+        hook.Remove("Think","FBROWSER")
+        hook.Remove("Think","GCHook")
+        hook.Remove("Think","Stonks")
+        hook.Remove("Think","WINMGR")
+        hook.Remove("Think","WINTASKBAR")
+        hook.Remove("Think","TimeDisplay_Winmenu")		
+		
+		
+end
+function listSkins()
+	chat.AddText("<c=09f> Available skins:")
+	local S = ""
+	for n,sk in pairs(SKINSETTINGS.AVAILABLESKINS) do
+	S = S .. n .. ":\n".. Compilepreview(sk) .."\n\n"
+	end
+	chat.AddText(S)
+end
 
+
+function startMenu()
 -- The taskbar.
 local WinMenu = vgui.Create("DMenuBar")
 	  WinMenu:Dock( BOTTOM )
@@ -757,8 +797,18 @@ local MainButton1 = StartMenuInternal2:Add("DButton",StartMenuInternal)
 	end
 	MainButton1.DoClick = function()
 		for N,Panel in pairs(Activepanels) do
+            
+
+-- make sure to also clear hooks KEKW
+
 			Panel:Remove()
 		end
+        hook.Remove("Think","FBROWSER")
+        hook.Remove("Think","GCHook")
+        hook.Remove("Think","Stonks")
+        hook.Remove("Think","WINMGR")
+        hook.Remove("Think","WINTASKBAR")
+        hook.Remove("Think","TimeDisplay_Winmenu")
 	end
 ------------------------------------------------------------
 
@@ -1179,13 +1229,14 @@ end
 end
 )
 
-hook.Add("Think","Stonks",function()
+hook.Add("Think","Stonks",function() -- has been updated!
 	if IsValid(Activepanels["Stonks Display"]) then
-			local OreCashBrz = (ms.Ores.GetPlayerOre(LocalPlayer(),0)*100)
-			local OreCashSlv = (ms.Ores.GetPlayerOre(LocalPlayer(),1)*300)
-			local OreCashGold = (ms.Ores.GetPlayerOre(LocalPlayer(),2)*1200)
-			local OreCashPlat = (ms.Ores.GetPlayerOre(LocalPlayer(),3)*2000)
-			local CashTotal = (OreCashBrz+OreCashSlv+OreCashGold+OreCashPlat)*ms.Ores.GetPlayerMultiplier(LocalPlayer())
+			local OreCashCoal = (ms.Ores.GetPlayerOre(LocalPlayer(),0)*5)
+			local OreCashBrz = (ms.Ores.GetPlayerOre(LocalPlayer(),1)*25)
+			local OreCashSlv = (ms.Ores.GetPlayerOre(LocalPlayer(),2)*75)
+			local OreCashGold = (ms.Ores.GetPlayerOre(LocalPlayer(),3)*300)
+			local OreCashPlat = (ms.Ores.GetPlayerOre(LocalPlayer(),4)*500)
+			local CashTotal = (OreCashCoal+OreCashBrz+OreCashSlv+OreCashGold+OreCashPlat)*ms.Ores.GetPlayerMultiplier(LocalPlayer())
 			Activepanels["Stonks Display"]:GetChildren()[6]:SetText("Multiplier:".. math.Round(ms.Ores.GetPlayerMultiplier(LocalPlayer()),3) .."\nCurrent trade-in would result in:\n+" .. tostring(math.Round(CashTotal)) .." Points/Coins")
 	end
 end)
@@ -1267,3 +1318,4 @@ hook.Add("Think","TimeDisplay_Winmenu",function()
  local DateTable = string.Split(os.date()," ")
  TimeD:SetText(DateTable[2] .."," .. DateTable[5] .. "\n" .. " " .. DateTable[4])
 end)
+end
