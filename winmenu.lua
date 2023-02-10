@@ -49,26 +49,12 @@ local BUFB = 0
 local DeltaBuffer = {}
 local MEDIAN = 0 -- we take the median of every entry in the buffer above.
 -----------------------------------------------
--- color to hex converter.
-	
-  function nHex(n)
-  n=math.floor(math.min(16,math.max(0,n)))
-     if n < 10 then return tostring(n) end
-     if n == 10 then return "a" end
-     if n == 11 then return "b" end
-     if n == 12 then return "c" end
-     if n == 13 then return "d" end
-     if n == 14 then return "e" end
-     if n == 15 then return "f" end
-  end
-  
+
   function toHexCompact(COL)
 	local R = COL["r"]/16
     local G = COL["g"]/16
     local B = COL["b"]/16
-    
-    local HC = nHex(R) .. nHex(G) .. nHex(B)
-  
+    local HC = bit.tohex(R,1) .. bit.tohex(G,1) .. bit.tohex(B,1)
     return HC
     
   end
