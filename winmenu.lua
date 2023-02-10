@@ -572,20 +572,28 @@ SetSkin = function(SkinType)
 	
 	SKINSETTINGS.SELECTEDSKIN   		= {SkinType}
 	SETSKIN		= SKINSETTINGS.AVAILABLESKINS[SKINSETTINGS.SELECTEDSKIN[1]]
+	
+	if hooks.Think.WINTASKBAR == not nil then
 		
-	for N,Panel in pairs(Activepanels) do
+			for N,Panel in pairs(Activepanels) do
 			-- make sure to also clear hooks KEKW
 			Panel:Remove()
-	end
+			end
+		
+		
+		
         hook.Remove("Think","FBROWSER")
         hook.Remove("Think","GCHook")
         hook.Remove("Think","Stonks")
         hook.Remove("Think","WINMGR")
         hook.Remove("Think","WINTASKBAR")
-        hook.Remove("Think","TimeDisplay_Winmenu")		
-		
-		
+        hook.Remove("Think","TimeDisplay_Winmenu")
+        
+        startMenu()
+        
+    end
 end
+
 function listSkins()
 	chat.AddText("<c=09f> Available skins:")
 	local S = ""
