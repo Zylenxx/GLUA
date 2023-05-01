@@ -5,9 +5,12 @@ local HP = 100
 local DontRechargeTime = 0
 local LevelInput = 1
 
+--[[
 if owner():getSteamID64()!= "76561198196422794" then 
   error("youre not the original author.",1)
 end
+]]--
+-- set above to your steamid to avoid stealers from being able to run it!
 
 timer.create("levelMGR_MMORPG",1,0,function()
     if CLIENT then
