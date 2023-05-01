@@ -46,6 +46,20 @@ end)
 
 
 
+
+
+ -- modify what is required here.
+ RAPPELZGUI = {}
+ 
+	-- the icon that should show.
+	RAPPELZGUI.Icon = "https://cdn.discordapp.com/attachments/453272722513068033/1099725400411746316/aegis.png"
+	
+	-- the class type that should show.
+	RAPPELZGUI.Class= "Aegis"
+ 
+ 
+
+
  -- exp levels from lvl 2 to 200
 local Rappelz_LevelsEXP = {
 	15,20,25,30,35,40,45,50,55,
@@ -240,7 +254,7 @@ function rappelzGUI()
 		CHRUI_CHTYPE = vgui.Create("DHTML",UI1,"RAPPELZ_CHARACTERTYPE_ICON")
 		CHRUI_CHTYPE:SetSize(18,30)
 		CHRUI_CHTYPE:SetPos(12,30)
-		CHRUI_CHTYPE:OpenURL("https://cdn.discordapp.com/attachments/453272722513068033/1099725400411746316/aegis.png")
+		CHRUI_CHTYPE:OpenURL(RAPPELZGUI.Icon)
 		
 		CHRUI_CHRINFO = vgui.Create("DPanel",UI1,"RAPPELZ_CHARACTER_INFO")
 		CHRUI_CHRINFO:SetSize(202,22)
@@ -251,7 +265,7 @@ function rappelzGUI()
 			TXTSub1:SetContentAlignment(4)
 			TXTSub1:SetSize(202,22)
 			TXTSub1:SetFontInternal("TargetID")
-			TXTSub1:SetText("Aegis")
+			TXTSub1:SetText(RAPPELZGUI.Class)
 			
 			TXTSub2 = vgui.Create("DLabel",CHRUI_CHRINFO,"RAPPELZ_CHARACTER_EXP")
 			TXTSub2:SetSize(150,22)
