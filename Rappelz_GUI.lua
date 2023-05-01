@@ -36,7 +36,7 @@ net.Receive("PlayerKilledByPlayer", function()
 
 	GAMEMODE:AddDeathNotice(attacker:Name(), attacker:Team(), inflictor, victim:Name(), victim:Team(), xtra)
 
-	hook.Run("PlayerKilledByPlayer", attacker, inflictor, victim)
+	hook.Run("PlayerKilledByPlayer", attacker, inflictor, victim) -- hack-in for use in the script
 end)
 
 
@@ -44,33 +44,30 @@ end)
 		ACTUAL CODE FROM HERE ON OUT
 ]]--
 
-local Rappelz_LevelsEXP = {6, 15, 32, 72, 160, 320, 540, 885, 1332,
-	1723, 2754, 3906, 5472, 7266, 9310, 11550,
-	14335, 17664, 21000, 31042, 36784, 42465, 48925,
-	56000, 64009, 72625, 81606, 91728, 102564, 138580,
-	153825, 169818, 186559, 205238, 224536, 245700, 266664,
-	289562, 314496, 411840, 444600, 479745, 514885, 552808,
-	593640, 634125, 677603, 724200, 770408, 996660, 1061208,
-	1125264, 1193998, 1266597, 1339182, 1416250, 1497390, 1578520,
-	1664397, 2134826, 2249000, 2366617, 2486356, 2613240, 2742336,
-	2875094, 3010800, 3153381, 3303038, 4219400, 4412826, 4610332,
-	4817137, 5022888, 5244470, 5465048, 5695488, 5930400, 6169784,
-	7872111, 8189110, 8519406, 8848395, 9190901, 9548496, 9903460,
-	10273791, 10659909, 11043256, 14079872, 14585548, 15111621, 15646560,
-	16191876, 16756980, 17320296, 17916443, 18509227, 19126008, 24386615,
-	25181882, 26004100, 26842578, 27707050, 28573125, 29465570, 30388736,
-	31311686, 32263932, 41166756, 42418640, 43692834, 44985232, 46316868,
-	47671680, 49045340, 50440164, 51875940, 53333532, 67776081, 69333028,
-	70896756, 72466905, 74076858, 75693010, 77317668, 78979644, 80647200,
-	82319958, 104727456, 106905610, 109089760, 111322768, 113564322, 115810964,
-	118068378, 120368200, 122675264, 124989165, 130562927, 137641588, 146560746,
-	157467800, 172398688, 192204261, 224046837, 272398022, 358817408, 509063847,
-	712689385, 1004892032, 1426946685, 2040533759, 2938368612, 4260634487, 6220526351,
-	9144173735, 13533377127, 20164731919, 24197678302, 29279190745, 35720612708, 43936353630,
-	54481078501, 68101348126, 85807698638, 108975777270, 139488994905, 179940803427, 251917124797,
-	355203145963, 504388467267, 721275508191, 1038636731795, 1506023261102, 2198793961208, 3232227122975,
-	4783696142003, 7127707251584, 8553248701900, 10349430929299, 12626305733744, 15530356052505, 19257641505106,
-	24072051881382, 30330785370541, 38520097420587, 49305724698351, 63604384860872}
+
+
+ -- exp levels from lvl 2 to 200
+local Rappelz_LevelsEXP = {
+	15,20,25,30,35,40,45,50,55,
+	260,265,270,275,280,285,290,295,300,305,
+	510,515,520,525,530,535,540,545,550,555,
+	760,765,770,775,780,785,790,795,800,805,
+	1010,1015,1020,1025,1030,1035,1040,1045,1050,1055,
+	2260,2265,2270,2275,2280,2285,2290,2295,2300,2305,
+	2710,2715,2720,2725,2730,2735,2740,2745,2750,2755,
+	3160,3165,3170,3175,3180,3185,3190,3195,3200,3205,
+	3610,3615,3620,3625,3630,3635,3640,3645,3650,3655,
+	4060,4065,4070,4075,4080,4085,4090,4095,4100,4105,
+	6510,6515,6520,6525,6530,6535,6540,6545,6550,6555,
+	7160,7165,7170,7175,7180,7185,7190,7195,7200,7205,
+	7810,7815,7820,7825,7830,7835,7840,7845,7850,7855,
+	8460,8465,8470,8475,8480,8485,8490,8495,8500,8505,
+	9110,9115,9120,9125,9130,9135,9140,9145,9150,9155,
+	12760,12765,12770,12775,12780,12785,12790,12795,12800,12805,
+	13610,13615,13620,13625,13630,13635,13640,13645,13650,13655,
+	14460,14465,14470,14475,14480,14485,14490,14495,14500,14505,
+	15310,15315,15320,15325,15330,15335,15340,15345,15350,15355,
+	16160,16165,16170,16175,16180,16185,16190,16195,16200,16205}
 
 	file.Write("sf_filedata/MMORPG.txt",tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1)))
 
@@ -96,12 +93,11 @@ function Calc_EXP_LVL_Progress()
 	end
 	
 	
-	
 end
 
 
 -- FUNC GUI_DATA INIT : Calculates all PDATA defaults.
-function ResetPDATA(Name)
+function ResetPDATA()
    -- session name
    LocalPlayer():SetPData("RAPPELZ_GUI_NAME",LocalPlayer():Name())
    -- session level
@@ -126,12 +122,12 @@ function UpdatePDATA(Type,Key)
 	end
 end
 
-function rappelz_gui_open()
+function rappelzGUI()
 
 	local Name  = LocalPlayer():GetPData("RAPPELZ_GUI_NAME","unknown") 
 	local Level = LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1)
     local EXP   = math.floor(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))
-    ArmorAMT    = 100+tonumber(Level*20)
+    ArmorAMT    = 100+tonumber(Level*50)
     LevelEXPMax = 12800
 	-- Top left character panel.
 	CharacterUI = vgui.Create("DPanel",nil,"Rappelz_Characterui")
@@ -270,8 +266,16 @@ function rappelz_gui_open()
 			TXTSub3:SetText(math.floor(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0)))
 				
 	hook.Add("Think","RAPPELZ_GUI_UPDATE",function()
-		ArmorAMT    = 100+tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1)*20)
+		if LocalPlayer():GetMaxHealth() == 100 then
+			ArmorAMT    = 100
+			else
+			ArmorAMT    = 100+tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1)*50)
+		end
 		LevelEXPMax = Rappelz_LevelsEXP[tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1))]
+		
+	if tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0)) > Rappelz_LevelsEXP[tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1))] then	
+		Calc_EXP_LVL_Progress()
+	end
 		
 	if CHRUI_HPBar:Valid() then
 		CHRUI_HPBar.Interpolate = math.max(CHRUI_HPBar.Interpolate-0.002,CHRUI_HPBar:GetFraction())
@@ -311,6 +315,25 @@ end)
 		Calc_EXP_LVL_Progress() -- calculate new exp and level if required.
 		
 	end)
+	
+	hook.Add("entity_killed","RAPPELZ_EXPSYSTEMPART2",function(data)
+		local Atk  = Entity(data.entindex_attacker)
+		local Vic  = Entity(data.entindex_killed)
+		local VicHP  = (Vic:GetMaxHealth() or 0)
+		if Vic and Atk then
+			if Vic == LocalPlayer() and Atk:IsNPC() then
+				local Loss = 0.05 -- loss in dec (1 = 100%)
+				UpdatePDATA(3,math.floor(math.max(0,tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))*(1-Loss)))) -- subtract % from exp
+			end
+			if Atk == LocalPlayer() and Vic:IsNPC() then
+		     	local Gain = 0.1 -- gain of exp in exp/h
+				local PH   = Vic:GetMaxHealth()
+				UpdatePDATA(3,math.floor(tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0)+ (PH*Gain) ))) -- add 10% of hp as exp.
+		    end
+		end	
+	end)
+	
+	
 	hook.Add( "HUDPaint","MMORPG_HPBARS_OTHERS",function()
 		local TBL = player.GetAll()
 		local TBL2 = ents.FindByClass("*npc*")
@@ -318,12 +341,12 @@ end)
 			if PLY ~= LocalPlayer() then
 				local DistScale = (PLY:GetShootPos()-LocalPlayer():GetShootPos()):Length()
 				local DistFade  = math.min(255,math.max(0,2048-DistScale*4))
-				local ToScreen = (PLY:GetShootPos()+Vector(0,0,12)):ToScreen()
+				local ToScreen = (PLY:GetShootPos()+Vector(0,0,10)):ToScreen()
 				local HP1      = PLY:Health()
 				local HP2      = PLY:GetMaxHealth()
 				local PNL      = {}
-				      PNL.x	   = 110/DistScale*200
-				      PNL.y    = 10/DistScale*200
+				      PNL.x	   = math.min(110,110/DistScale*200)
+				      PNL.y    = math.min(10,10/DistScale*200)
 				local FracHP   = math.min(1,HP1/HP2)
 				      
 				 draw.RoundedBoxEx( 0,
@@ -352,8 +375,8 @@ end)
 				local HP1      = NPC:Health()
 				local HP2      = NPC:GetMaxHealth()
 				local PNL      = {}
-				      PNL.x	   = 110/DistScale*200
-				      PNL.y    = 10/DistScale*200
+				      PNL.x	   = math.min(110,110/DistScale*200)
+				      PNL.y    = math.min(10,10/DistScale*200)
 			    local FracHP   = math.min(1,HP1/100)
 			    local getNameNPC = string.gsub(string.gsub(string.gsub(NPC:GetClass(),"_"," "),"npc",""),"lua","")
 			    local FormatNameNPC = string.gsub(getNameNPC,"(%l)(%w*)", function(a,b) return string.upper(a)..b end)
@@ -399,7 +422,7 @@ end
 
  
 
-function rappelz_gui_close()
+function closeRappelzGUI()
 	CharacterUI:Remove()
 	CHRUI_LEVEL:Remove()
 	CHRUI_NAME:Remove()
@@ -408,5 +431,6 @@ function rappelz_gui_close()
 	CHRUI_EXPBar:Remove()
 	hook.Remove("Think","RAPPELZ_GUI_UPDATE")
 	hook.Remove("PlayerKilledByPlayer","RAPPELZ_EXPSYSTEMPART1")
+	hook.Remove("entity_killed","RAPPELZ_EXPSYSTEMPART2")
 	hook.Remove( "HUDPaint","MMORPG_HPBARS_OTHERS")
 end
