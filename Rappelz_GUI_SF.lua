@@ -26,7 +26,7 @@ end)
 
 net.receive("rplz_sendvar",function()
     N = tonumber(net.readString())
-    HP = 100+N*20
+    HP = 100+(N*50)
 end)
 
 
