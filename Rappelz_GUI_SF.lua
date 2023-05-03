@@ -5,12 +5,14 @@ local HP = 100
 local DontRechargeTime = 0
 local LevelInput = 1
 
+-- this is sf code yoinking protection, ill comment this out
+
 --[[
 if owner():getSteamID64()!= "76561198196422794" then 
   error("youre not the original author.",1)
 end
+
 ]]--
--- set above to your steamid to avoid stealers from being able to run it!
 
 timer.create("levelMGR_MMORPG",1,0,function()
     if CLIENT then
@@ -27,7 +29,8 @@ timer.create("levelMGR_MMORPG",1,0,function()
     end       
 end)
 
-net.receive("rplz_sendvar",function()
+-- this reads from a clientside file on what my "level is"
+ net.receive("rplz_sendvar",function()
     N = tonumber(net.readString())
     HP = 100+(N*50)
 end)
@@ -35,7 +38,7 @@ end)
 
 timer.create("alivecheck",1,0,function()
    if SERVER and owner():getMaxHealth()!= HP and owner():isAlive() then    
-      owner():setHealth(HP)  
+      owner():setHealth(HP)
    end
    if SERVER and owner():isAlive() then
       owner():setMaxHealth(HP) 
