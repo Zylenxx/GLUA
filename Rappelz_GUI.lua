@@ -61,27 +61,25 @@ end)
 
 
  -- exp levels from lvl 2 to 200
-local Rappelz_LevelsEXP = {
-	15,20,25,30,35,40,45,50,55,
-	260,265,270,275,280,285,290,295,300,305,
-	510,515,520,525,530,535,540,545,550,555,
-	760,765,770,775,780,785,790,795,800,805,
-	1010,1015,1020,1025,1030,1035,1040,1045,1050,1055,
-	2260,2265,2270,2275,2280,2285,2290,2295,2300,2305,
-	2710,2715,2720,2725,2730,2735,2740,2745,2750,2755,
-	3160,3165,3170,3175,3180,3185,3190,3195,3200,3205,
-	3610,3615,3620,3625,3630,3635,3640,3645,3650,3655,
-	4060,4065,4070,4075,4080,4085,4090,4095,4100,4105,
-	6510,6515,6520,6525,6530,6535,6540,6545,6550,6555,
-	7160,7165,7170,7175,7180,7185,7190,7195,7200,7205,
-	7810,7815,7820,7825,7830,7835,7840,7845,7850,7855,
-	8460,8465,8470,8475,8480,8485,8490,8495,8500,8505,
-	9110,9115,9120,9125,9130,9135,9140,9145,9150,9155,
-	12760,12765,12770,12775,12780,12785,12790,12795,12800,12805,
-	13610,13615,13620,13625,13630,13635,13640,13645,13650,13655,
-	14460,14465,14470,14475,14480,14485,14490,14495,14500,14505,
-	15310,15315,15320,15325,15330,15335,15340,15345,15350,15355,
-	16160,16165,16170,16175,16180,16185,16190,16195,16200,16205}
+local Rappelz_LevelsEXP = {75,100,125,150,175,200,225,250,275,1300,1325,1350,1375,
+1400,1425,1450,1475,1500,1525,2550,2575,2600,2625,2650,2675,
+2700,2725,2750,2775,3800,3825,3850,3875,3900,3925,3950,3975,
+4000,4025,5050,5075,5100,5125,5150,5175,5200,5225,5250,5275,
+11300,11325,11350,11375,11400,11425,11450,11475,11500,11525,
+13550,13575,13600,13625,13650,13675,13700,13725,13750,13775,
+15800,15825,15850,15875,15900,15925,15950,15975,16000,16025,
+18050,18075,18100,18125,18150,18175,18200,18225,18250,18275,
+20300,20325,20350,20375,20400,20425,20450,20475,20500,20525,
+32550,32575,32600,32625,32650,32675,32700,32725,32750,32775,
+35800,35825,35850,35875,35900,35925,35950,35975,36000,36025,
+39050,39075,39100,39125,39150,39175,39200,39225,39250,39275,
+42300,42325,42350,42375,42400,42425,42450,42475,42500,42525,
+45550,45575,45600,45625,45650,45675,45700,45725,45750,45775,
+63800,63825,63850,63875,63900,63925,63950,63975,64000,64025,
+68050,68075,68100,68125,68150,68175,68200,68225,68250,68275,
+72300,72325,72350,72375,72400,72425,72450,72475,72500,72525,
+76550,76575,76600,76625,76650,76675,76700,76725,76750,76775,
+80800,80825,80850,80875,80900,80925,80950,80975,81000,81025}
 
 	file.Write("sf_filedata/MMORPG.txt",tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1)))
 
@@ -105,8 +103,6 @@ function Calc_EXP_LVL_Progress()
 	else
 		file.Write("sf_filedata/MMORPG.txt",CurLVL)
 	end
-	
-	
 end
 
 
@@ -137,7 +133,9 @@ function UpdatePDATA(Type,Key)
 end
 
 function rappelzGUI()
-
+	
+	concommand.Add("RGUI_Recalc",function() Calc_EXP_LVL_Progress() end,nil,"Recalculates the RappelzGUI exp and name.")
+	concommand.Add("RGUI_ClassName",function(p,s,t,strg) RAPPELZGUI.Class = t[1] end,nil,"Sets the classname shown in the RappelzGUI.")
 	local Name  = LocalPlayer():GetPData("RAPPELZ_GUI_NAME","unknown") 
 	local Level = LocalPlayer():GetPData("RAPPELZ_GUI_LVL",1)
     local EXP   = math.floor(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))
@@ -199,7 +197,7 @@ function rappelzGUI()
 		CHRUI_HPTXT:Dock(FILL)
 		CHRUI_HPTXT:SetContentAlignment(6)
 		CHRUI_HPTXT:SetText(LocalPlayer():Health() .."/".. LocalPlayer():GetMaxHealth())
-		CHRUI_HPTXT:SetFontInternal("TargetID")
+		CHRUI_HPTXT:SetFontInternal("targetid")
 		CHRUI_HPTXT:SetVisible(true)
 		
 		
@@ -229,7 +227,7 @@ function rappelzGUI()
 		CHRUI_ARTXT:Dock(FILL)
 		CHRUI_ARTXT:SetContentAlignment(6)
 		CHRUI_ARTXT:SetText( math.min(LocalPlayer():Armor()) .."/".. ArmorAMT)
-		CHRUI_ARTXT:SetFontInternal("TargetID")
+		CHRUI_ARTXT:SetFontInternal("targetid")
 		CHRUI_ARTXT:SetVisible(true)
 		
 		
@@ -316,8 +314,15 @@ end)
 	hook.Add("PlayerKilledByPlayer","RAPPELZ_EXPSYSTEMPART1",function(attacker,inflictor,victim)
 		
 		if victim == LocalPlayer() then
-			local Loss = 0.05 -- loss in dec (1 = 100%)
-			UpdatePDATA(3,math.floor(math.max(0,tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))*(1-Loss)))) -- subtract % from exp
+			local Loss = 20 -- loss in pts
+			
+			if EXP-Loss<0 then
+				local Underflow = EXP-Loss+Rappelz_LevelsEXP[math.max(1,Level-1)]
+				UpdatePDATA(3,Underflow)
+				UpdatePDATA(2,math.max(1,Level-1))
+			else
+				UpdatePDATA(3,math.floor(math.max(0,tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))-Loss))) -- subtract % from exp
+			end
 		end
 		
 		if attacker == LocalPlayer() then
@@ -326,6 +331,9 @@ end)
 			UpdatePDATA(3,math.floor(tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0)+ (PH*Gain) ))) -- add 10% of hp as exp.
 		end
 		
+		
+		
+		
 		Calc_EXP_LVL_Progress() -- calculate new exp and level if required.
 		
 	end)
@@ -333,11 +341,20 @@ end)
 	hook.Add("entity_killed","RAPPELZ_EXPSYSTEMPART2",function(data)
 		local Atk  = Entity(data.entindex_attacker)
 		local Vic  = Entity(data.entindex_killed)
-		local VicHP  = (Vic:GetMaxHealth() or 0)
+		local VicHP = 0
+		local Loss = 10 -- loss in pts
+		if Vic:IsValid() then
+			VicHP  = (Vic:GetMaxHealth())
+		end
 		if Vic and Atk then
 			if Vic == LocalPlayer() and Atk:IsNPC() then
-				local Loss = 0.05 -- loss in dec (1 = 100%)
-				UpdatePDATA(3,math.floor(math.max(0,tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))*(1-Loss)))) -- subtract % from exp
+				if EXP-Loss<0 then
+					local Underflow = EXP-Loss+Rappelz_LevelsEXP[math.max(1,Level-1)]
+					UpdatePDATA(3,Underflow)
+					UpdatePDATA(2,math.max(1,Level-1))
+				else
+					UpdatePDATA(3,math.floor(math.max(0,tonumber(LocalPlayer():GetPData("RAPPELZ_GUI_EXP",0))-Loss))) -- subtract % from exp
+				end
 			end
 			if Atk == LocalPlayer() and Vic:IsNPC() then
 		     	local Gain = 0.1 -- gain of exp in exp/h
@@ -437,6 +454,8 @@ end
  
 
 function closeRappelzGUI()
+	concommand.Remove("RGUI_Recalc")
+	concommand.Remove("RGUI_ClassName")
 	CharacterUI:Remove()
 	CHRUI_LEVEL:Remove()
 	CHRUI_NAME:Remove()
