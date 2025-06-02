@@ -10,11 +10,12 @@ local lookup = function(string)
 	if string.lower(string) == "cookie" then mdl = "models/python1320/cookie5.mdl" end
 	if string.lower(string) == "coke" then mdl = "models/props_junk/garbage_sodacan01a.mdl" end
 	if string.lower(string) == "bar" then mdl = "models/props_mining/ingot001.mdl" end
+	if string.lower(string) == "orange" then mdl = "models/props/cs_italy/orange.mdl" end
 	return mdl
 end
 local lookupSZ = function(string)
 	local SZ = Vector(0,0,0)
-	if string.lower(string) == "melon" then SZ = Vector(13,13,3) end
+	if string.lower(string) == "melon" then SZ = Vector(15,15,0) end
 	if string.lower(string) == "crate" then SZ = Vector(50,50,50) end
 	if string.lower(string) == "fish" then SZ = Vector(13,13,5) end
 	if string.lower(string) == "pizza" then SZ = Vector(13,13,13) end
@@ -22,10 +23,15 @@ local lookupSZ = function(string)
 	if string.lower(string) == "cookie" then SZ = Vector(3,3,0) end
 	if string.lower(string) == "coke" then SZ = Vector(6,8,2) end
 	if string.lower(string) == "bar" then SZ = Vector(25,25,25) end
+	if string.lower(string) == "orange" then SZ = Vector(9,9,0) end
 	return SZ
 end
 
 local MakePanel = function(From,To,ENTMDL,ITM,HT,C,SZ)
+	
+	local ColorBG1 = Color(64,64,64)
+	local ColorBG2 = Color(32,32,32)
+	
 		            local II = vgui.Create("DPanel")
 					II:SetSize(525/6,525/6)
 					II:SetBackgroundColor(ColorBG2)
@@ -44,6 +50,9 @@ local MakePanel = function(From,To,ENTMDL,ITM,HT,C,SZ)
 		return {Main=II,Internal=IMI}
 end
 local MakePanelRemovable = function(From,ENTMDL,ITM,HT,C,SZ)
+	
+	local ColorBG1 = Color(64,64,64)
+	local ColorBG2 = Color(32,32,32)
 		            local II = vgui.Create("DPanel")
 					II:SetSize(525/6,525/6)
 					II:SetBackgroundColor(ColorBG2)
@@ -104,10 +113,10 @@ local function ConfirmSendItem(Panel,Info)
 end
 
 msitems.OpenTradePanel = function()
-
+	
 	local ColorBG1 = Color(64,64,64)
 	local ColorBG2 = Color(32,32,32)
-
+	
 	local Main = vgui.Create("DFrame")
 	Main:SetPos((ScrW()/2)-600,ScrH()-650)
 	Main:SetSize(1200,600)
@@ -180,7 +189,51 @@ msitems.OpenTradePanel = function()
 				
 				Items1:AddItem(SET.Main)
 			end
+	end
+	
+	local ConfirmClientside = vgui.Create("DButton",Main)
+	ConfirmClientside:SetPos(5,600-45)
+	ConfirmClientside:SetSize(240,40)
+	ConfirmClientside:SetText("")
+	function ConfirmClientside:Paint(BH,BW)
+		
+			surface.SetDrawColor(0,0,0,128)
+			surface.DrawRect(0,0,BH,BW)
+		if ConfirmClientside:IsHovered() then
+			surface.SetDrawColor(0,255,0,64)	
+			surface.DrawRect(0,0,BH,BW)
 		end
+			draw.DrawText("Confirm Trade",
+				"hdrdemotext",
+				BH/2, 
+				BW/4, 
+				Color( 255, 255, 255, 52 ), 
+				TEXT_ALIGN_CENTER )
+		
+	end
+	
+	local AbortClientside = vgui.Create("DButton",Main)
+	AbortClientside:SetPos(550-235,600-45)
+	AbortClientside:SetSize(240,40)
+	AbortClientside:SetText("")
+	function AbortClientside:Paint(BH,BW)
+		
+			surface.SetDrawColor(0,0,0,128)
+			surface.DrawRect(0,0,BH,BW)
+		if AbortClientside:IsHovered() then
+			surface.SetDrawColor(255,0,0,64)	
+			surface.DrawRect(0,0,BH,BW)
+		end
+			draw.DrawText("Abort",
+				"hdrdemotext",
+				BH/2, 
+				BW/4, 
+				Color( 255, 255, 255, 52 ), 
+				TEXT_ALIGN_CENTER )
+		
+	end
+	
+	
 		  
 end
 
