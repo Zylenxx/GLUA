@@ -30,6 +30,10 @@ and gain health accordingly.
 - [ ] Proper Lua => SF Communication
 - [ ] Spellbar, etc.
 
+* This mod requires starfall and e2! Pac3 segments are optional. SF Code is in this branch, MMORPG E2 code is [here](https://github.com/Zylenxx/Expression2/blob/mmorpg/mmorpg_e2.expr2).
+
+
+
 ## PrintFrame
 a quality of life improvement to view tables as a drawn DTree! Supports variable depth seeking.
 
@@ -37,8 +41,5 @@ a quality of life improvement to view tables as a drawn DTree! Supports variable
 
 - [X] Supports any length of table so long as the char limit isnt reached
 - [ ] Custom Style
-
-
-* This mod requires starfall and e2! Pac3 segments are optional. SF Code is in this branch, MMORPG E2 code is [here](https://github.com/Zylenxx/Expression2/blob/mmorpg/mmorpg_e2.expr2).
 
 You will find alot of content here that i am going to constantly adjust, patch and add onto as i please.
