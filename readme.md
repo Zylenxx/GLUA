@@ -37,7 +37,7 @@ and gain health accordingly.
 ## PrintFrame
 a quality of life improvement to view tables as a drawn DTree! Supports variable depth seeking.
 
-![image](https://github.com/user-attachments/assets/6e607554-5508-435c-a98d-eadf0d12cb46)
+![image](https://github.com/user-attachments/assets/db7883ba-baab-4746-a282-d61ffc4e69bf)
 
 - [X] Supports any length of table so long as the char limit isnt reached
 - [ ] Custom Style
