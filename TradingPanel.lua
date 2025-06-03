@@ -1,18 +1,4 @@
 -- Trading Panel Mockup
-
-local lookup = function(string)
-	local mdl = ""
-	if string.lower(string) == "melon" then mdl = "models/props_junk/watermelon01.mdl" end
-	if string.lower(string) == "crate" then mdl = "models/props_crates/static_crate_40.mdl" end
-	if string.lower(string) == "fish" then mdl = "models/props/de_inferno/goldfish.mdl" end
-	if string.lower(string) == "pizza" then mdl = "models/props_arcade/pizza001a.mdl" end
-	if string.lower(string) == "coffee" then mdl = "models/props_junk/garbage_coffeemug001a_forevergibs.mdl" end
-	if string.lower(string) == "cookie" then mdl = "models/python1320/cookie5.mdl" end
-	if string.lower(string) == "coke" then mdl = "models/props_junk/garbage_sodacan01a.mdl" end
-	if string.lower(string) == "bar" then mdl = "models/props_mining/ingot001.mdl" end
-	if string.lower(string) == "orange" then mdl = "models/props/cs_italy/orange.mdl" end
-	return mdl
-end
 local lookupSZ = function(string)
 	local SZ = Vector(0,0,0)
 	if string.lower(string) == "melon" then SZ = Vector(15,15,0) end
@@ -105,8 +91,10 @@ local function ConfirmSendItem(Panel,Info)
 		
 	function SetAmount:DoClick()
 			local Cn = Amount:GetInt()
-			local SET2 = MakePanelRemovable(Panel,A,B,C,Cn,E)
-			Panel:AddItem(SET2.Main)
+			if Cn > 0 then 
+				local SET2 = MakePanelRemovable(Panel,A,B,C,Cn,E)
+				Panel:AddItem(SET2.Main)
+			end
 		ConfPanel:Close()
 	end
 
@@ -174,11 +162,13 @@ msitems.OpenTradePanel = function()
 	local 	INV = LocalPlayer():GetInventory()
 		for k,v in pairs(INV) do 
 			if v.untradable == false then
-				local Item = v.data.inventory.name
-				local HoverText = v.data.inventory.info
+				local GetInfo = msitems.Classes[v.data.class]
+				local Item = GetInfo.Inventory.name
+				local HoverText = GetInfo.Inventory.info
 				local Count = v.count
+				local GetInfo = msitems.Classes[v.data.class]
 				local ModelRef = string.split(Item," ")[#string.split(Item," ")]
-				local ModelStr = lookup(ModelRef)
+				local ModelStr = GetInfo.WorldModel
 				local ModelSZ  = lookupSZ(ModelRef)
 				local Packed   = {ModelStr,Item,HoverText,Count,ModelSZ}
 				local SET=MakePanel(Items1,Items1Send,ModelStr,Item,HoverText,Count,ModelSZ)
