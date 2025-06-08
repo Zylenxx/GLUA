@@ -24,6 +24,7 @@ function PrintFrame(IN,depth,maxdepth,StartPathName)
 				Bulletin.BType  = type(v)
 				Bulletin.PathN  = StartPathName .. "." .. k 
 				Bulletin.PureN  = k
+				Bulletin.PureV  = v
 				Bulletin:SetSkin(SK)
 				if istable(v) then Bulletin:SetIcon("icon16/application_view_list.png") end
 				if type(v)=="string" then Bulletin:SetIcon("icon16/font.png") end
@@ -55,19 +56,30 @@ function PrintFrame(IN,depth,maxdepth,StartPathName)
 	Interaction:SetSize(1000,100)
 	Interaction:SetSkin(SK)
 	
-	local ColorPreview = vgui.Create("DPanel",Interaction)
-	ColorPreview:SetSize(75,75)
-	ColorPreview:SetPos(400,12)
-	ColorPreview.Color=Color(0,0,0,0)
-			function ColorPreview:Paint(w,h)
+	local MaterialPreview = vgui.Create("DPanel",Interaction)
+	MaterialPreview:SetSize(75,75)
+	MaterialPreview:SetPos(400,12)
+	MaterialPreview.Color=Color(0,0,0,0)
+	MaterialPreview.DispType="Color"
+	MaterialPreview.Mat = Material( "gui/alpha_grid.png", "noclamp smooth" )
+			function MaterialPreview:Paint(w,h)
 				local r,g,b,a = self.Color:Unpack()
-				local MT = Material( "gui/alpha_grid.png", "noclamp smooth" )
+				if self.DispType=="Color" then
+					local MT = Material( "gui/alpha_grid.png", "noclamp smooth" )
 				surface.SetDrawColor(255,255,255,255)
 				surface.SetMaterial(MT)
 				surface.DrawTexturedRectUV(0,0,w,h,-0.125,-0.125,0.125,0.125)
-				
-				surface.SetDrawColor(r or 0,g or 0,b or 0,a or 0)
-				surface.DrawRect(0,0,w,h)
+				end
+				if self.DispType=="Mat" then
+					local MT = self.Mat or Material( "gui/alpha_grid.png", "noclamp smooth" )
+						surface.SetDrawColor(255,255,255,255)
+						surface.SetMaterial(MT)
+						surface.DrawTexturedRectUV(0,0,w,h,0,0,1,1)
+				end
+				if self.DispType=="Color" then
+					surface.SetDrawColor(r or 0,g or 0,b or 0,a or 0)
+					surface.DrawRect(0,0,w,h)
+				end
 			end
 	
 	
@@ -109,10 +121,10 @@ function PrintFrame(IN,depth,maxdepth,StartPathName)
 		local NM  = Tree:GetSelectedItem().PathN
 		local VL  = string.split(TXT,":")[2]
 		
-		if Tree:GetSelectedItem().BType == "color" then
-			ColorPreview:Show()
+		if Tree:GetSelectedItem().BType == "color" or Tree:GetSelectedItem().BType == "IMaterial" then
+			MaterialPreview:Show()
 		else
-			ColorPreview:Hide()
+			MaterialPreview:Hide()
 		end
 	
 		
@@ -190,9 +202,16 @@ function PrintFrame(IN,depth,maxdepth,StartPathName)
 		   InfoI:SetText(NM.."\nType:".. Tree:GetSelectedItem().BType or "No item selected.")
 		else
 		   InfoI:SetText(NM.."\nType:".. Tree:GetSelectedItem().BType .."(".. VL ..")" or "No item selected.")
+		   
 		   if Tree:GetSelectedItem().BType == "color" then
-		   	  ColorPreview.Color = string.ToColor(VL)
+		   	  MaterialPreview.DispType = "Color"
+		   	  MaterialPreview.Color = string.ToColor(VL)
 		   end
+		   	if Tree:GetSelectedItem().BType == "IMaterial" then
+		   	  MaterialPreview.DispType = "Mat"
+		   	  MaterialPreview.Mat = Tree:GetSelectedItem().PureV
+		   end
+		   
 		end
 
 		function pnl:DoRightClick()
