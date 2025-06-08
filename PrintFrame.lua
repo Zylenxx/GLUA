@@ -243,7 +243,9 @@ function TestPrintFrame()
 		bool=false,
 		table={string2="The Fitnessgram pacer test is a multistage aerobic capacity test that progressively",
 			string3="gets more difficult as it continues."
-		}
+		},
+		MaterialPreviewBaseTexture=Material( "gui/alpha_grid.png", "noclamp smooth" ),
+		E=Material("gui/e.png","noclamp nosmooth")
 	}
 	PrintFrame(TestTable,0,250,"TestTable")
 end
