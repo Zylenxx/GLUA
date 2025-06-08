@@ -38,6 +38,7 @@ function PrintFrame(IN,depth,maxdepth,StartPathName)
 				if type(v)=="nil" then Bulletin:SetIcon("icon16/cross.png") end -- should not happen
 				if type(v)=="Vector" then Bulletin:SetIcon("icon16/arrow_out.png") end
 				if type(v)=="Angle" then Bulletin:SetIcon("icon16/arrow_rotate_anticlockwise.png") end
+				if type(v)=="IMaterial" then Bulletin:SetIcon("icon16/image.png") end
 				if type(v) == "table" then
 					 depth=depth+1
 					 Lenmax=Lenmax-1
