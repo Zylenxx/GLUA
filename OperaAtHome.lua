@@ -6,32 +6,7 @@ function Opera(StartURL)
     OPERA:SetSizable(true)
     OPERA:SetTitle("")
     OPERA:SetSkin("dark_meta")
-    OPERA.btnMinim:SetDisabled(false)
-    OPERA.Minimized = 0
-    OPERA.LastState = {Pos=OPERA:GetPos(),Size=OPERA:GetSize()}
-    function OPERA.btnMinim:DoClick()
-    	if OPERA.Minimized==1 then 
-    		OPERA:MakePopup()
-    		OPERA:SetSize(1280,720)
-    		OPERA:SetPos(OPERA.LastState.Pos)
-    		OPERA.Minimized=0
-    	else
-    		OPERA.LastState = {Pos=OPERA:GetPos()}
-    		OPERA:SetPos(10,ScrH()-50)
-    		OPERA:SetSize(100,40)
-    		OPERA.Minimized=1
-    	end
-    	
-    end
-	
-    -- microhack to avoid other panels setting the value permanently, FAILS AFTER USING MAKEPOPUP TWICE?
-    function OPERA:Think()
-      if self.Minimized==1 then self:SetKeyboardInputEnabled(false) 
-  		else
-  			self:SetKeyboardInputEnabled(true)
-  	  end 
-    end
-	
+    OPERA:MakePopup()
        local ICO    =vgui.Create("RichText",OPERA)
        ICO:SetPos(2,2)
        ICO:SetSize(24,24)
@@ -139,9 +114,9 @@ function Opera(StartURL)
   	function ADTabBut:DoClick()
 		MakeTab("https://start.pprmint.de/","start")
 	end
+
  return OPERA
 end
-
 
  -- CONTEXT MENU STUFF
  if OperaCTX then OperaCTX:Remove() end
