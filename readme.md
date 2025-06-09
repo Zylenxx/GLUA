@@ -34,12 +34,27 @@ and gain health accordingly.
 
 
 
-## PrintFrame
+## PrintFrame (v 1.5d)
 a quality of life improvement to view tables as a drawn DTree! Supports variable depth seeking.
 
-![image](https://github.com/user-attachments/assets/db7883ba-baab-4746-a282-d61ffc4e69bf)
+![image](https://github.com/user-attachments/assets/2accdd1d-be4d-435e-9919-459a594b81d3)
 
 - [X] Supports any length of table so long as the char limit isnt reached
-- [ ] Custom Style
+- [X] Custom Style
+- [X] Material Previews
+- [X] Color Previews
+- [ ] MultiTab
+
+## Opera Browser (OperaAtHome)
+A very heavy WIP to open a dedicated HTML browser with actual browser bar!
+* functions may be broken, minimizing the opera browser is temporarely disabled until i can figure out MakePopup jank
+
+![image](https://github.com/user-attachments/assets/23ffc299-af76-471d-9b83-27e13a6578d9)
+
+- [X] Custom Tabs
+- [X] Context Menu support
+- [ ] Bookmarks (soon™)
+- [ ] Last Visited Pages
+
 
 You will find alot of content here that i am going to constantly adjust, patch and add onto as i please.
