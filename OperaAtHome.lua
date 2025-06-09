@@ -11,9 +11,12 @@ function Opera(StartURL)
     OPERA.LastState = {Pos=OPERA:GetPos(),Size=OPERA:GetSize()}
     function OPERA.btnMinim:DoClick()
     	if OPERA.Minimized==1 then 
+    		OPERA:MakePopup()
     		OPERA:SetSize(1280,720)
     		OPERA:SetPos(OPERA.LastState.Pos)
+    		OPERA:SetKeyboardInputEnabled(true)
     	else
+    		OPERA:SetKeyboardInputEnabled(false)
     		OPERA.LastState = {Pos=OPERA:GetPos()}
     		OPERA:SetPos(10,ScrH()-50)
     		OPERA:SetSize(100,40)
@@ -127,26 +130,5 @@ function Opera(StartURL)
   	function ADTabBut:DoClick()
 		MakeTab("https://start.pprmint.de/","start")
  end
- 
-
 return OPERA
 end
- -- CONTEXT MENU STUFF
- if OperaCTX then OperaCTX:Remove() end
- OperaCTX = g_ContextMenu:GetChildren()[3]:Add("DButton")
- OperaCTX:SetSize(80,80)
- OperaCTX:SetDrawBackground(false)
- OperaCTX:SetText("")
- function OperaCTX:Paint(w,h)
- 	local M = Material("icon16/world.png", "noclamp")
-    surface.SetMaterial(M)
-    surface.DrawTexturedRect(5,5,w-10,h-10)
-    surface.SetFont("CloseCaption_Bold")
-    local TSX,TSY = surface.GetTextSize("Opera")
-    surface.SetTextPos(5,TSY)
-    surface.SetTextColor(194,42,42)
-    surface.DrawText("Opera")
- end
- function OperaCTX:DoClick()
- Opera()	
- end
