@@ -14,19 +14,24 @@ function Opera(StartURL)
     		OPERA:MakePopup()
     		OPERA:SetSize(1280,720)
     		OPERA:SetPos(OPERA.LastState.Pos)
-    		OPERA:SetKeyboardInputEnabled(true)
+    		OPERA.Minimized=0
     	else
-    		OPERA:SetKeyboardInputEnabled(false)
     		OPERA.LastState = {Pos=OPERA:GetPos()}
     		OPERA:SetPos(10,ScrH()-50)
     		OPERA:SetSize(100,40)
+    		OPERA.Minimized=1
     	end
-    	OPERA.Minimized	= 1-OPERA.Minimized	
+    	
     end
-    -- microhack to avoid other panels setting the value permanently
-    function OPERA:think()
-      if self.Minimized then OPERA:SetKeyboardInputEnabled(false) end 
+	
+    -- microhack to avoid other panels setting the value permanently, FAILS AFTER USING MAKEPOPUP TWICE?
+    function OPERA:Think()
+      if self.Minimized==1 then self:SetKeyboardInputEnabled(false) 
+  		else
+  			self:SetKeyboardInputEnabled(true)
+  	  end 
     end
+	
        local ICO    =vgui.Create("RichText",OPERA)
        ICO:SetPos(2,2)
        ICO:SetSize(24,24)
@@ -133,6 +138,28 @@ function Opera(StartURL)
 	  
   	function ADTabBut:DoClick()
 		MakeTab("https://start.pprmint.de/","start")
+	end
+
+
+ -- CONTEXT MENU STUFF
+ if OperaCTX then OperaCTX:Remove() end
+ OperaCTX = g_ContextMenu:GetChildren()[3]:Add("DButton")
+ OperaCTX:SetSize(80,80)
+ OperaCTX:SetDrawBackground(false)
+ OperaCTX:SetText("")
+ function OperaCTX:Paint(w,h)
+ 	local M = Material("icon16/world.png", "noclamp")
+    surface.SetMaterial(M)
+    surface.DrawTexturedRect(5,5,w-10,h-10)
+    surface.SetFont("CloseCaption_Bold")
+    local TSX,TSY = surface.GetTextSize("Opera")
+    surface.SetTextPos(5,TSY)
+    surface.SetTextColor(194,42,42)
+    surface.DrawText("Opera")
  end
-return OPERA
+ function OperaCTX:DoClick()
+ Opera()	
+ end
+
+ return OPERA
 end
