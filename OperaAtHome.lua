@@ -139,6 +139,8 @@ function Opera(StartURL)
   	function ADTabBut:DoClick()
 		MakeTab("https://start.pprmint.de/","start")
 	end
+ return OPERA
+end
 
 
  -- CONTEXT MENU STUFF
@@ -160,6 +162,3 @@ function Opera(StartURL)
  function OperaCTX:DoClick()
  Opera()	
  end
-
- return OPERA
-end
