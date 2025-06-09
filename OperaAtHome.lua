@@ -23,6 +23,10 @@ function Opera(StartURL)
     	end
     	OPERA.Minimized	= 1-OPERA.Minimized	
     end
+    -- microhack to avoid other panels setting the value permanently
+    function OPERA:think()
+      if self.Minimized then OPERA:SetKeyboardInputEnabled(false) end 
+    end
        local ICO    =vgui.Create("RichText",OPERA)
        ICO:SetPos(2,2)
        ICO:SetSize(24,24)
@@ -131,27 +135,4 @@ function Opera(StartURL)
 		MakeTab("https://start.pprmint.de/","start")
  end
 return OPERA
-
-
- -- CONTEXT MENU STUFF
- if OperaCTX then OperaCTX:Remove() end
- OperaCTX = g_ContextMenu:GetChildren()[3]:Add("DButton")
- OperaCTX:SetSize(80,80)
- OperaCTX:SetDrawBackground(false)
- OperaCTX:SetText("")
- function OperaCTX:Paint(w,h)Add commentMore actions
- 	local M = Material("icon16/world.png", "noclamp")
-    surface.SetMaterial(M)
-    surface.DrawTexturedRect(5,5,w-10,h-10)
-    surface.SetFont("CloseCaption_Bold")
-    local TSX,TSY = surface.GetTextSize("Opera")
-    surface.SetTextPos(5,TSY)
-    surface.SetTextColor(194,42,42)
-    surface.DrawText("Opera")
- end
- function OperaCTX:DoClick()
- Opera()	
- end
-
-
 end
